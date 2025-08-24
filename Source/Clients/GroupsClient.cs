@@ -19,7 +19,7 @@ public sealed class GroupsClient(HttpClient httpClient, IOpenIDConnectClient ope
         httpClient.WithAuthorization(authenticationResult.Data.AccessToken)
             .WithTenantHeader(clientCredentials.Tenant);
 
-        var response = await httpClient.PostAsJsonAsync("api/v1/identity/groups", group, cancellation);
+        var response = await httpClient.PostAsJsonAsync("api/v1/groups", group, cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
         {
             return Result<GroupDetails>.Failure(SdkErrors.Unauthorized);
