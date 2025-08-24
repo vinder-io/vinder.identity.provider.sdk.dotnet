@@ -11,4 +11,9 @@ public interface IIdentityClient
         IdentityEnrollmentCredentials credentials,
         CancellationToken cancellation = default
     );
+
+    public Task<Result> InvalidateSessionAsync(
+        SessionInvalidation session,
+        CancellationToken cancellation = default
+    );
 }
