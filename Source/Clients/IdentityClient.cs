@@ -46,4 +46,22 @@ public sealed class IdentityClient(HttpClient httpClient) : IIdentityClient
 
         return Result.Success();
     }
+
+    public async Task<Result> InvalidateSessionAsync(SessionInvalidation session, CancellationToken cancellation = default)
+    {
+        var response = await httpClient.PostAsJsonAsync("api/v1/identity/invalidate-session", session, cancellation);
+        if (response.IsSuccessStatusCode is false)
+        {
+            var error = await response.Content.ReadFromJsonAsync<Error>(
+                options: JsonSerialization.SerializerOptions,
+                cancellationToken: cancellation
+            );
+
+            return error is not null
+                ? Result.Failure(error)
+                : Result.Failure(SdkErrors.DeserializationFailure);
+        }
+
+        return Result.Success();
+    }
 }
