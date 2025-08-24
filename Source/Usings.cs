@@ -9,4 +9,9 @@ global using System.Net.Http.Json;
 global using Vinder.IdentityProvider.Sdk.Contracts;
 global using Vinder.IdentityProvider.Sdk.Serializers;
 global using Vinder.IdentityProvider.Sdk.Errors;
+global using Vinder.IdentityProvider.Sdk.Extensions;
+global using Vinder.IdentityProvider.Sdk.Configurations;
+
 global using Vinder.IdentityProvider.Sdk.Payloads.Identity;
+global using Vinder.IdentityProvider.Sdk.Payloads.Group;
+global using Vinder.IdentityProvider.Sdk.Payloads.Permission;
