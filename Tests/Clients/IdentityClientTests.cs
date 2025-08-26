@@ -117,4 +117,72 @@ public sealed class IdentityClientTests(IdentityProviderFixture server) :
         Assert.True(result.IsFailure);
         Assert.Equal(TenantErrors.TenantDoesNotExist, result.Error);
     }
+
+    [Fact(DisplayName = "[e2e] - when create identity with valid credentials should succeed and authenticate successfully")]
+    public async Task WhenCreateIdentity_WithValidCredentials_ShouldSucceedAndAuthenticate()
+    {
+        /* arrange: create an identity client with the proper tenant header */
+        var identityClient = new IdentityClient(_httpClient.WithTenantHeader("master"));
+
+        /* arrange: define enrollment credentials for a new user */
+        var credentials = new IdentityEnrollmentCredentials
+        {
+            Username = $"user_{Guid.NewGuid():N}",
+            Password = "SuperSecret123!"
+        };
+
+        /* act: create the identity */
+        var creationResult = await identityClient.CreateIdentityAsync(credentials);
+
+        /* assert: ensure the identity creation was successful */
+        Assert.True(creationResult.IsSuccess);
+
+        /* arrange: prepare authentication credentials for the created user */
+        var authenticationCredentials = new AuthenticationCredentials
+        {
+            Username = credentials.Username,
+            Password = credentials.Password
+        };
+
+        /* act: attempt to authenticate with the newly created identity */
+        var authenticationResult = await identityClient.AuthenticateAsync(authenticationCredentials);
+
+        /* assert: ensure the authentication was successful */
+        Assert.True(authenticationResult.IsSuccess);
+        Assert.NotNull(authenticationResult.Data);
+
+        /* assert: verify that both access and refresh tokens are returned and not empty */
+        Assert.NotEmpty(authenticationResult.Data.AccessToken);
+        Assert.NotEmpty(authenticationResult.Data.RefreshToken);
+    }
+
+    [Fact(DisplayName = "[e2e] - when create identity with an existing username should fail with conflict error")]
+    public async Task WhenCreateIdentity_WithExistingUsername_ShouldFailWithConflict()
+    {
+        /* arrange: create an identity client with the proper tenant header */
+        var identityClient = new IdentityClient(_httpClient.WithTenantHeader("master"));
+
+        /* arrange: define fixed enrollment credentials for the user */
+        var credentials = new IdentityEnrollmentCredentials
+        {
+            Username = $"user_{Guid.NewGuid():N}",
+            Password = "SuperSecret123!"
+        };
+
+        /* act: first creation should succeed */
+        var firstCreationResult = await identityClient.CreateIdentityAsync(credentials);
+
+        /* act: second creation with the same username */
+        var secondCreationResult = await identityClient.CreateIdentityAsync(credentials);
+
+        /* assert: ensure the second creation failed */
+        Assert.True(firstCreationResult.IsSuccess);
+        Assert.False(secondCreationResult.IsSuccess);
+
+        Assert.NotNull(secondCreationResult.Error);
+
+        /* assert: verify the correct conflict error was returned */
+        Assert.Equal(IdentityErrors.UserAlreadyExists.Code, secondCreationResult.Error.Code);
+        Assert.Equal(IdentityErrors.UserAlreadyExists.Description, secondCreationResult.Error.Description);
+    }
 }
