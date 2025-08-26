@@ -27,4 +27,25 @@ public sealed class IdentityClientTests(IdentityProviderFixture server) :
         Assert.NotEmpty(result.Data.AccessToken);
         Assert.NotEmpty(result.Data.RefreshToken);
     }
+
+    [Fact(DisplayName = "[e2e] when authenticate with non-existent user should return UserNotFound error")]
+    public async Task WhenAuthenticate_WithNonExistentUser_ShouldReturnUserNotFound()
+    {
+        /* arrange: create an identity client with the proper tenant header */
+        var client = new IdentityClient(_httpClient.WithTenantHeader("master"));
+
+        /* arrange: define credentials for a user that does not exist */
+        var credentials = new AuthenticationCredentials
+        {
+            Username = "non.existent.user",
+            Password = "somepassword"
+        };
+
+        /* act: attempt to authenticate the non-existent user */
+        var result = await client.AuthenticateAsync(credentials);
+
+        /* assert: ensure the authentication failed */
+        Assert.False(result.IsSuccess);
+        Assert.Equal(AuthenticationErrors.UserNotFound, result.Error);
+    }
 }
