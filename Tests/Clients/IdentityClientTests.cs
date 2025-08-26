@@ -5,11 +5,11 @@ public sealed class IdentityClientTests(IdentityProviderFixture server) :
 {
     private readonly HttpClient _httpClient = server.HttpClient;
 
-    [Fact(DisplayName = "[e2e] when authenticate with valid credentials should succeed")]
+    [Fact(DisplayName = "[e2e] - when authenticate with valid credentials should succeed")]
     public async Task WhenAuthenticate_WithValidCredentials_ShouldSucceed()
     {
         /* arrange: create an identity client with the proper tenant header and define admin credentials */
-        var client = new IdentityClient(_httpClient.WithTenantHeader("master"));
+        var identityClient = new IdentityClient(_httpClient.WithTenantHeader("master"));
         var credentials = new AuthenticationCredentials
         {
             Username = "admin",
@@ -17,7 +17,7 @@ public sealed class IdentityClientTests(IdentityProviderFixture server) :
         };
 
         /* act: send a POST request to the authenticate endpoint using the identity client */
-        var result = await client.AuthenticateAsync(credentials);
+        var result = await identityClient.AuthenticateAsync(credentials);
 
         /* assert: ensure the authentication was successful and the result contains data */
         Assert.True(result.IsSuccess);
@@ -28,11 +28,11 @@ public sealed class IdentityClientTests(IdentityProviderFixture server) :
         Assert.NotEmpty(result.Data.RefreshToken);
     }
 
-    [Fact(DisplayName = "[e2e] when authenticate with non-existent user should return UserNotFound error")]
+    [Fact(DisplayName = "[e2e] - when authenticate with non-existent user should return UserNotFound error")]
     public async Task WhenAuthenticate_WithNonExistentUser_ShouldReturnUserNotFound()
     {
         /* arrange: create an identity client with the proper tenant header */
-        var client = new IdentityClient(_httpClient.WithTenantHeader("master"));
+        var identityClient = new IdentityClient(_httpClient.WithTenantHeader("master"));
 
         /* arrange: define credentials for a user that does not exist */
         var credentials = new AuthenticationCredentials
@@ -42,7 +42,7 @@ public sealed class IdentityClientTests(IdentityProviderFixture server) :
         };
 
         /* act: attempt to authenticate the non-existent user */
-        var result = await client.AuthenticateAsync(credentials);
+        var result = await identityClient.AuthenticateAsync(credentials);
 
         /* assert: ensure the authentication failed */
         Assert.False(result.IsSuccess);
