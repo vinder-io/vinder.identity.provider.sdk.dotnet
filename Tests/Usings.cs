@@ -5,6 +5,8 @@ global using System.Security.Cryptography;
 /* global usings for SDK namespaces here */
 
 global using Vinder.IdentityProvider.Sdk.Clients;
+global using Vinder.IdentityProvider.Sdk.Errors;
+
 global using Vinder.IdentityProvider.Sdk.Extensions;
 global using Vinder.IdentityProvider.Sdk.Payloads.Identity;
 global using Vinder.IdentityProvider.Sdk.TestSuite.Fixtures;
