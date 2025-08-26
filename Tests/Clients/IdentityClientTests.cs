@@ -5,8 +5,8 @@ public sealed class IdentityClientTests(IdentityProviderFixture server) :
 {
     private readonly HttpClient _httpClient = server.HttpClient;
 
-    [Fact(DisplayName = "[e2e] Authenticate with admin credentials should succeed")]
-    public async Task Authenticate_WithAdminCredentials_ShouldSucceed()
+    [Fact(DisplayName = "[e2e] when authenticate with valid credentials should succeed")]
+    public async Task WhenAuthenticate_WithValidCredentials_ShouldSucceed()
     {
         /* arrange: create an identity client with the proper tenant header and define admin credentials */
         var client = new IdentityClient(_httpClient.WithTenantHeader("master"));
