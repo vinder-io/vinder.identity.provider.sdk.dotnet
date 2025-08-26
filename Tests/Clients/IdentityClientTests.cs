@@ -48,4 +48,73 @@ public sealed class IdentityClientTests(IdentityProviderFixture server) :
         Assert.False(result.IsSuccess);
         Assert.Equal(AuthenticationErrors.UserNotFound, result.Error);
     }
+
+    [Fact(DisplayName = "[e2e] - when authenticate with valid user but wrong password should return #VINDER-IDP-ERR-AUT-401 error")]
+    public async Task WhenAuthenticate_WithValidUserButWrongPassword_ShouldReturnInvalidCredentials()
+    {
+        /* arrange: create an identity client with the proper tenant header */
+        var identityClient = new IdentityClient(_httpClient.WithTenantHeader("master"));
+
+        /* arrange: define credentials with an existing username but wrong password */
+        var credentials = new AuthenticationCredentials
+        {
+            Username = "admin",
+            Password = "wrongpassword"
+        };
+
+        /* act: attempt to authenticate with invalid credentials */
+        var result = await identityClient.AuthenticateAsync(credentials);
+
+        /* assert: ensure the authentication failed */
+        Assert.True(result.IsFailure);
+        Assert.Equal(AuthenticationErrors.InvalidCredentials, result.Error);
+    }
+
+    [Fact(DisplayName = "[e2e] - when authenticate without tenant header should return #VINDER-IDP-ERR-TNT-400 error")]
+    public async Task WhenAuthenticate_WithoutTenantHeader_ShouldReturnTenantHeaderMissing()
+    {
+        /* arrange: ensure tenant header is removed before creating the identity client */
+        const string tenantHeader = "x-tenant";
+
+        if (_httpClient.DefaultRequestHeaders.Contains(tenantHeader))
+            _httpClient.DefaultRequestHeaders.Remove(tenantHeader);
+
+        /* arrange: create an identity client without setting the tenant header */
+        var identityClient = new IdentityClient(_httpClient);
+
+        /* arrange: define valid credentials */
+        var credentials = new AuthenticationCredentials
+        {
+            Username = "admin",
+            Password = "admin"
+        };
+
+        /* act: attempt to authenticate without tenant header */
+        var result = await identityClient.AuthenticateAsync(credentials);
+
+        /* assert: ensure the authentication failed */
+        Assert.True(result.IsFailure);
+        Assert.Equal(TenantErrors.TenantHeaderMissing, result.Error);
+    }
+
+    [Fact(DisplayName = "[e2e] - when authenticate with non-existent tenant should return #VINDER-IDP-ERR-TNT-404 error")]
+    public async Task WhenAuthenticate_WithNonExistentTenant_ShouldReturnTenantDoesNotExist()
+    {
+        /* arrange: create an identity client with a non-existent tenant header */
+        var identityClient = new IdentityClient(_httpClient.WithTenantHeader("non-existent-tenant"));
+
+        /* arrange: define valid credentials */
+        var credentials = new AuthenticationCredentials
+        {
+            Username = "admin",
+            Password = "admin"
+        };
+
+        /* act: attempt to authenticate with non-existent tenant */
+        var result = await identityClient.AuthenticateAsync(credentials);
+
+        /* assert: ensure the authentication failed */
+        Assert.True(result.IsFailure);
+        Assert.Equal(TenantErrors.TenantDoesNotExist, result.Error);
+    }
 }
