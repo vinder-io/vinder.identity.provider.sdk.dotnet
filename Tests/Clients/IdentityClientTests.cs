@@ -1,8 +1,3 @@
-using Vinder.IdentityProvider.Sdk.Clients;
-using Vinder.IdentityProvider.Sdk.Extensions;
-using Vinder.IdentityProvider.Sdk.Payloads.Identity;
-using Vinder.IdentityProvider.Sdk.TestSuite.Fixtures;
-
 namespace Vinder.IdentityProvider.Sdk.TestSuite.Clients;
 
 public sealed class IdentityClientTests(IdentityProviderFixture server) :
