@@ -185,4 +185,34 @@ public sealed class IdentityClientTests(IdentityProviderFixture server) :
         Assert.Equal(IdentityErrors.UserAlreadyExists.Code, secondCreationResult.Error.Code);
         Assert.Equal(IdentityErrors.UserAlreadyExists.Description, secondCreationResult.Error.Description);
     }
+
+    [Fact(DisplayName = "[e2e] - when invalidate session for admin should succeed")]
+    public async Task WhenInvalidateSession_ForAdmin_ShouldSucceed()
+    {
+        /* arrange: create an identity client with the proper tenant header */
+        var identityClient = new IdentityClient(_httpClient.WithTenantHeader("master"));
+        var credentials = new AuthenticationCredentials
+        {
+            Username = "admin",
+            Password = "admin"
+        };
+
+        /* arrange: authenticate with admin to obtain a valid session */
+        var authenticationResult = await identityClient.AuthenticateAsync(credentials);
+
+        Assert.True(authenticationResult.IsSuccess);
+        Assert.NotNull(authenticationResult.Data);
+
+        /* arrange: prepare session invalidation using admin's refresh token */
+        var sessionInvalidation = new SessionInvalidation
+        {
+            RefreshToken = authenticationResult.Data.RefreshToken
+        };
+
+        /* act: invalidate the session */
+        var invalidationResult = await identityClient.InvalidateSessionAsync(sessionInvalidation);
+
+        /* assert: ensure the invalidation was successful */
+        Assert.True(invalidationResult.IsSuccess);
+    }
 }
