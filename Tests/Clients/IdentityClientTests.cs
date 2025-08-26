@@ -28,7 +28,7 @@ public sealed class IdentityClientTests(IdentityProviderFixture server) :
         Assert.NotEmpty(result.Data.RefreshToken);
     }
 
-    [Fact(DisplayName = "[e2e] - when authenticate with non-existent user should return UserNotFound error")]
+    [Fact(DisplayName = "[e2e] - when authenticate with non-existent user should return #VINDER-IDP-ERR-AUT-404 error")]
     public async Task WhenAuthenticate_WithNonExistentUser_ShouldReturnUserNotFound()
     {
         /* arrange: create an identity client with the proper tenant header */
