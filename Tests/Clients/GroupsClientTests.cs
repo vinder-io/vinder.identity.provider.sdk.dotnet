@@ -27,13 +27,13 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the groups client and the group to create */
         var groupsClient = new GroupsClient(_httpClient);
-        var groupToCreate = new GroupForCreation
+        var group = new GroupForCreation
         {
             Name = "vinder.defaults.groups.testing"
         };
 
         /* act: call the create group async method */
-        var result = await groupsClient.CreateGroupAsync(groupToCreate);
+        var result = await groupsClient.CreateGroupAsync(group);
 
         /* assert: verify that the group was created successfully */
         Assert.True(result.IsSuccess);
@@ -42,6 +42,6 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
         Assert.NotNull(result.Data.Id);
 
         Assert.Empty(result.Data.Permissions);
-        Assert.Equal(groupToCreate.Name, result.Data.Name);
+        Assert.Equal(group.Name, result.Data.Name);
     }
 }
