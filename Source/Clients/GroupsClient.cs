@@ -1,24 +1,9 @@
 namespace Vinder.IdentityProvider.Sdk.Clients;
 
-public sealed class GroupsClient(HttpClient httpClient, IOpenIDConnectClient openIDClient, ClientCredentials clientCredentials) : IGroupsClient
+public sealed class GroupsClient(HttpClient httpClient) : IGroupsClient
 {
     public async Task<Result<GroupDetails>> CreateGroupAsync(GroupForCreation group, CancellationToken cancellation = default)
     {
-        var credentials = new ClientAuthenticationCredentials
-        {
-            ClientId = clientCredentials.ClientId,
-            ClientSecret = clientCredentials.ClientSecret
-        };
-
-        var authenticationResult = await openIDClient.AuthenticateAsync(credentials, cancellation);
-        if (authenticationResult.IsFailure || authenticationResult.Data is null)
-        {
-            return Result<GroupDetails>.Failure(authenticationResult.Error);
-        }
-
-        httpClient.WithAuthorization(authenticationResult.Data.AccessToken)
-            .WithTenantHeader(clientCredentials.Tenant);
-
         var response = await httpClient.PostAsJsonAsync("api/v1/groups", group, cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
         {
