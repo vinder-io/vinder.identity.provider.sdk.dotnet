@@ -44,4 +44,92 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
         Assert.Empty(result.Data.Permissions);
         Assert.Equal(group.Name, result.Data.Name);
     }
+
+    [Fact(DisplayName = "[e2e] - when update group with valid data should succeed")]
+    public async Task WhenUpdateGroup_WithValidData_ShouldSucceed()
+    {
+        /* arrange: create an identity client with the proper tenant header and define admin credentials */
+        var identityClient = new IdentityClient(_httpClient.WithTenantHeader("master"));
+        var credentials = new AuthenticationCredentials
+        {
+            Username = "admin",
+            Password = "admin"
+        };
+
+        /* act: send a POST request to the authenticate endpoint using the identity client */
+        var authenticationResult = await identityClient.AuthenticateAsync(credentials);
+
+        /* assert: ensure the authentication was successful and the result contains data */
+        Assert.True(authenticationResult.IsSuccess);
+        Assert.NotNull(authenticationResult.Data);
+
+        _httpClient.WithAuthorization(authenticationResult.Data.AccessToken);
+
+        /* arrange: create the groups client */
+        var groupsClient = new GroupsClient(_httpClient);
+        var group = new GroupForCreation
+        {
+            Name = "vinder.defaults.groups.to.update"
+        };
+
+        var createResult = await groupsClient.CreateGroupAsync(group);
+
+        Assert.True(createResult.IsSuccess);
+        Assert.NotNull(createResult.Data);
+
+        /* arrange: prepare update context with the created group Id and new name */
+        var updateContext = new GroupUpdateContext
+        {
+            Id = createResult.Data.Id,
+            Name = "vinder.defaults.groups.updated"
+        };
+
+        /* act: call the update group async method */
+        var updateResult = await groupsClient.UpdateGroupAsync(updateContext);
+
+        /* assert: verify that the group was updated successfully */
+        Assert.True(updateResult.IsSuccess);
+        Assert.NotNull(updateResult.Data);
+
+        Assert.Equal(updateContext.Id, updateResult.Data.Id);
+        Assert.Equal(updateContext.Name, updateResult.Data.Name);
+    }
+
+    [Fact(DisplayName = "[e2e] - when update non-existent group should fail")]
+    public async Task WhenUpdateNonExistentGroup_ShouldFail()
+    {
+        /* arrange: create an identity client with the proper tenant header and define admin credentials */
+        var identityClient = new IdentityClient(_httpClient.WithTenantHeader("master"));
+        var credentials = new AuthenticationCredentials
+        {
+            Username = "admin",
+            Password = "admin"
+        };
+
+        /* act: send a POST request to the authenticate endpoint using the identity client */
+        var authenticationResult = await identityClient.AuthenticateAsync(credentials);
+
+        /* assert: ensure the authentication was successful and the result contains data */
+        Assert.True(authenticationResult.IsSuccess);
+        Assert.NotNull(authenticationResult.Data);
+
+        _httpClient.WithAuthorization(authenticationResult.Data.AccessToken);
+
+        /* arrange: create the groups client and prepare update context for a non-existent group */
+        var groupsClient = new GroupsClient(_httpClient);
+        var updateContext = new GroupUpdateContext
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = "vinder.defaults.groups.non.existent"
+        };
+
+        /* act: call the update group async method */
+        var updateResult = await groupsClient.UpdateGroupAsync(updateContext);
+
+        /* assert: verify that the update failed and the correct error was returned */
+        Assert.False(updateResult.IsSuccess);
+
+        Assert.NotNull(updateResult.Error);
+        Assert.Equal(GroupErrors.GroupDoesNotExist, updateResult.Error);
+    }
 }
