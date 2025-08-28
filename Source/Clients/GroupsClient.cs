@@ -61,4 +61,27 @@ public sealed class GroupsClient(HttpClient httpClient) : IGroupsClient
             ? Result<GroupDetails>.Success(result)
             : Result<GroupDetails>.Failure(SdkErrors.DeserializationFailure);
     }
+
+    public async Task<Result> DeleteGroupAsync(Guid groupId, CancellationToken cancellation = default)
+    {
+        var response = await httpClient.DeleteAsync($"api/v1/groups/{groupId}", cancellation);
+        if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+        {
+            return Result.Failure(SdkErrors.Unauthorized);
+        }
+
+        if (response.IsSuccessStatusCode is false)
+        {
+            var error = await response.Content.ReadFromJsonAsync<Error>(
+                options: JsonSerialization.SerializerOptions,
+                cancellationToken: cancellation
+            );
+
+            return error is not null
+                ? Result.Failure(error)
+                : Result.Failure(SdkErrors.DeserializationFailure);
+        }
+
+        return Result.Success();
+    }
 }
