@@ -11,6 +11,7 @@ global using Vinder.IdentityProvider.Sdk.Extensions;
 global using Vinder.IdentityProvider.Sdk.Payloads.Identity;
 global using Vinder.IdentityProvider.Sdk.Payloads.Group;
 global using Vinder.IdentityProvider.Sdk.Payloads.Permission;
+global using Vinder.IdentityProvider.Sdk.Payloads.Tenant;
 global using Vinder.IdentityProvider.Sdk.TestSuite.Fixtures;
 
 /* global usings for third-party namespaces here */
