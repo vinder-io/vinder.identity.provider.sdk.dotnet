@@ -123,4 +123,64 @@ public interface IGroupsClient
         AssignGroupPermission data,
         CancellationToken cancellation = default
     );
+
+    /// <summary>
+    /// Revokes a permission from a group.
+    /// </summary>
+    /// <param name="groupId">The identifier of the group.</param>
+    /// <param name="permissionId">The identifier of the permission to be revoked.</param>
+    /// <param name="cancellation">A cancellation token to cancel the operation.</param>
+    /// <returns>A <see cref="Result"/> indicating success or failure.</returns>
+    /// <remarks>
+    /// This method calls the Identity API to revoke a permission from a group.
+    /// On success, it returns a successful result.
+    /// On failure, the returned result contains detailed error information.
+    ///
+    /// <para>The following errors may occur when calling this method:</para>
+    /// <list type="bullet">
+    ///   <item>
+    ///     <description><see cref="GroupErrors.GroupDoesNotExist"/> — code: <c>#VINDER-IDP-ERR-GRP-404</c></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="PermissionErrors.PermissionDoesNotExist"/> — code: <c>#VINDER-IDP-ERR-PRM-404</c></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="GroupErrors.PermissionNotAssigned"/> — code: <c>#VINDER-IDP-ERR-GRP-409</c></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="SdkErrors.Unauthorized"/> — code: <c>#VINDER-SDK-ERR-003</c> (if the caller lacks permission)</description>
+    ///   </item>
+    /// </list>
+    ///
+    /// For a full list of group and authentication errors, see: <see href="https://bit.ly/errors-reference">Errors Reference</see>.
+    /// Use this method when you need to programmatically revoke permissions from groups.
+    /// </remarks>
+    Task<Result> RevokeGroupPermissionAsync(Guid groupId, Guid permissionId, CancellationToken cancellation = default);
+
+    /// <summary>
+    /// Retrieves a paginated list of permissions assigned to a group.
+    /// </summary>
+    /// <param name="groupId">The identifier of the group.</param>
+    /// <param name="parameters">The query parameters for pagination and filtering.</param>
+    /// <param name="cancellation">A cancellation token to cancel the operation.</param>
+    /// <returns>A <see cref="Result{T}"/> containing the list of permissions or an error.</returns>
+    /// <remarks>
+    /// This method calls the Identity API to get the permissions of a group.
+    /// On success, it returns a paginated list of permission details.
+    /// On failure, the returned result contains detailed error information.
+    ///
+    /// <para>The following errors may occur when calling this method:</para>
+    /// <list type="bullet">
+    ///   <item>
+    ///     <description><see cref="GroupErrors.GroupDoesNotExist"/> — code: <c>#VINDER-IDP-ERR-GRP-404</c></description>
+    ///   </item>
+    ///   <item>
+    ///     <description><see cref="SdkErrors.Unauthorized"/> — code: <c>#VINDER-SDK-ERR-003</c> (if the caller lacks permission)</description>
+    ///   </item>
+    /// </list>
+    ///
+    /// For a full list of group and authentication errors, see: <see href="https://bit.ly/errors-reference">Errors Reference</see>.
+    /// Use this method to retrieve permissions assigned to a specific group.
+    /// </remarks>
+    Task<Result<IReadOnlyCollection<PermissionDetails>>> GetGroupPermissionsAsync(Guid groupId, ListGroupPermissionsParameters parameters, CancellationToken cancellation = default);
 }
