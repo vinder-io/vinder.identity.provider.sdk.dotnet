@@ -6,4 +6,19 @@ public interface ITenantsClient
         TenantFetchParameters parameters,
         CancellationToken cancellation = default
     );
+
+    public Task<Result<TenantDetails>> CreateTenantAsync(
+        TenantForCreation tenant,
+        CancellationToken cancellation = default
+    );
+
+    public Task<Result<TenantDetails>> UpdateTenantAsync(
+        TenantForUpdate tenant,
+        CancellationToken cancellation = default
+    );
+
+    public Task<Result> DeleteTenantAsync(
+        Guid tenantId,
+        CancellationToken cancellation = default
+    );
 }
