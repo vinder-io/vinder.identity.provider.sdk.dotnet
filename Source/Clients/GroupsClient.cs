@@ -140,9 +140,10 @@ public sealed class GroupsClient(HttpClient httpClient) : IGroupsClient
 
     public async Task<Result<IReadOnlyCollection<PermissionDetails>>> GetGroupPermissionsAsync(Guid groupId, ListGroupPermissionsParameters parameters, CancellationToken cancellation = default)
     {
-        var queryString = QueryParametersParser.ToQueryString(parameters);
-        var response = await httpClient.GetAsync($"api/v1/groups/{groupId}/permissions?{queryString}", cancellation);
+        string queryString = QueryParametersParser.ToQueryString(parameters);
+        string url = $"api/v1/groups/{groupId}/permissions?{queryString}";
 
+        var response = await httpClient.GetAsync(url, cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
         {
             return Result<IReadOnlyCollection<PermissionDetails>>.Failure(SdkErrors.Unauthorized);

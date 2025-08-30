@@ -87,9 +87,10 @@ public sealed class PermissionsClient(HttpClient httpClient) : IPermissionsClien
 
     public async Task<Result<Pagination<PermissionDetails>>> GetPermissionsAsync(PermissionsFetchParameters parameters, CancellationToken cancellation = default)
     {
-        var queryString = QueryParametersParser.ToQueryString(parameters);
+        string queryString = QueryParametersParser.ToQueryString(parameters);
+        string url = $"api/v1/permissions?{queryString}";
 
-        var response = await httpClient.GetAsync($"api/v1/permissions?{queryString}", cancellation);
+        var response = await httpClient.GetAsync(url, cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
         {
             return Result<Pagination<PermissionDetails>>.Failure(SdkErrors.Unauthorized);
