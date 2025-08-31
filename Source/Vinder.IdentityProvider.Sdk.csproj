@@ -4,6 +4,15 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Vinder.IdentityProvider.Sdk</PackageId>
+    <Company>Vinder</Company>
+    <Description>SDK for consuming the Vinder Identity Provider and managing authentication and authorization.</Description>
+    <PackageTags>identity;authentication;sdk;jwt</PackageTags>
+    <RepositoryUrl>https://github.com/vinder-io/vinder.identity.provider.sdk.dotnet</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/vinder-io/vinder.identity.provider.sdk.dotnet</PackageProjectUrl>
+    <PackageReadmeFile>../README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
