@@ -40,7 +40,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
         Guid userId, ListUserAssignedPermissionsParameters? parameters = null, CancellationToken cancellation = default)
     {
         string queryString = QueryParametersParser.ToQueryString(parameters);
-        string url = $"api/v1/users?{queryString}";
+        string url = $"api/v1/users/{userId}/permissions?{queryString}";
 
         var response = await httpClient.GetAsync(url, cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
