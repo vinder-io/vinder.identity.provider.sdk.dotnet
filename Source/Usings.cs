@@ -10,6 +10,7 @@ global using System.Reflection;
 /* global usings for Microsoft namespaces here */
 
 global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 /* global usings for SDK namespaces here */
 
