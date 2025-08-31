@@ -174,4 +174,50 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
 
         return Result.Success();
     }
+
+    public async Task<Result> RevokeUserPermissionAsync(Guid userId, Guid permissionId, CancellationToken cancellation = default)
+    {
+        var response = await httpClient.DeleteAsync($"api/v1/users/{userId}/permissions/{permissionId}", cancellation);
+        if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+        {
+            return Result.Failure(SdkErrors.Unauthorized);
+        }
+
+        if (response.IsSuccessStatusCode is false)
+        {
+            var error = await response.Content.ReadFromJsonAsync<Error>(
+                options: JsonSerialization.SerializerOptions,
+                cancellationToken: cancellation
+            );
+
+            return error is not null
+                ? Result.Failure(error)
+                : Result.Failure(SdkErrors.DeserializationFailure);
+        }
+
+        return Result.Success();
+    }
+
+    public async Task<Result> RemoveUserFromGroupAsync(Guid userId, Guid groupId, CancellationToken cancellation = default)
+    {
+        var response = await httpClient.DeleteAsync($"api/v1/users/{userId}/groups/{groupId}", cancellation);
+        if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+        {
+            return Result.Failure(SdkErrors.Unauthorized);
+        }
+
+        if (response.IsSuccessStatusCode is false)
+        {
+            var error = await response.Content.ReadFromJsonAsync<Error>(
+                options: JsonSerialization.SerializerOptions,
+                cancellationToken: cancellation
+            );
+
+            return error is not null
+                ? Result.Failure(error)
+                : Result.Failure(SdkErrors.DeserializationFailure);
+        }
+
+        return Result.Success();
+    }
 }
