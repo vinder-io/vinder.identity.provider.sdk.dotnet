@@ -33,4 +33,16 @@ public interface IUsersClient
         AssignUserPermissionContext data,
         CancellationToken cancellation = default
     );
+
+    public Task<Result> RevokeUserPermissionAsync(
+        Guid userId,
+        Guid permissionId,
+        CancellationToken cancellation = default
+    );
+
+    public Task<Result> RemoveUserFromGroupAsync(
+        Guid userId,
+        Guid groupId,
+        CancellationToken cancellation = default
+    );
 }
