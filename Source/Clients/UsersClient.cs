@@ -126,4 +126,28 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
 
         return Result.Success();
     }
+
+    public async Task<Result> AssignUserToGroupAsync(
+        AssignUserToGroupContext data, CancellationToken cancellation = default)
+    {
+        var response = await httpClient.PostAsJsonAsync($"api/v1/users/{data.UserId}/groups", data, cancellation);
+        if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+        {
+            return Result.Failure(SdkErrors.Unauthorized);
+        }
+
+        if (response.IsSuccessStatusCode is false)
+        {
+            var error = await response.Content.ReadFromJsonAsync<Error>(
+                options: JsonSerialization.SerializerOptions,
+                cancellationToken: cancellation
+            );
+
+            return error is not null
+                ? Result.Failure(error)
+                : Result.Failure(SdkErrors.DeserializationFailure);
+        }
+
+        return Result.Success();
+    }
 }
