@@ -12,7 +12,6 @@
     <RepositoryUrl>https://github.com/vinder-io/vinder.identity.provider.sdk.dotnet</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/vinder-io/vinder.identity.provider.sdk.dotnet</PackageProjectUrl>
-    <PackageReadmeFile>../README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
