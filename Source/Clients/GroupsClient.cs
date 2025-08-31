@@ -138,7 +138,8 @@ public sealed class GroupsClient(HttpClient httpClient) : IGroupsClient
         return Result.Success();
     }
 
-    public async Task<Result<IReadOnlyCollection<PermissionDetails>>> GetGroupPermissionsAsync(Guid groupId, ListGroupPermissionsParameters parameters, CancellationToken cancellation = default)
+    public async Task<Result<IReadOnlyCollection<PermissionDetails>>> GetGroupPermissionsAsync(
+        Guid groupId, ListGroupPermissionsParameters? parameters = null, CancellationToken cancellation = default)
     {
         string queryString = QueryParametersParser.ToQueryString(parameters);
         string url = $"api/v1/groups/{groupId}/permissions?{queryString}";

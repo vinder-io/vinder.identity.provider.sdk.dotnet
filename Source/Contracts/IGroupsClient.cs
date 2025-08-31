@@ -155,7 +155,11 @@ public interface IGroupsClient
     /// For a full list of group and authentication errors, see: <see href="https://bit.ly/errors-reference">Errors Reference</see>.
     /// Use this method when you need to programmatically revoke permissions from groups.
     /// </remarks>
-    Task<Result> RevokeGroupPermissionAsync(Guid groupId, Guid permissionId, CancellationToken cancellation = default);
+    public Task<Result> RevokeGroupPermissionAsync(
+        Guid groupId,
+        Guid permissionId,
+        CancellationToken cancellation = default
+    );
 
     /// <summary>
     /// Retrieves a paginated list of permissions assigned to a group.
@@ -182,5 +186,9 @@ public interface IGroupsClient
     /// For a full list of group and authentication errors, see: <see href="https://bit.ly/errors-reference">Errors Reference</see>.
     /// Use this method to retrieve permissions assigned to a specific group.
     /// </remarks>
-    Task<Result<IReadOnlyCollection<PermissionDetails>>> GetGroupPermissionsAsync(Guid groupId, ListGroupPermissionsParameters parameters, CancellationToken cancellation = default);
+    public Task<Result<IReadOnlyCollection<PermissionDetails>>> GetGroupPermissionsAsync(
+        Guid groupId,
+        ListGroupPermissionsParameters? parameters = null,
+        CancellationToken cancellation = default
+    );
 }
