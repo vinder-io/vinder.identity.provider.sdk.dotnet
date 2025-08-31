@@ -12,6 +12,7 @@ public static class AuthenticationExtension
             {
                 configuration.Authority = options.BaseUrl;
                 configuration.Audience = options.Tenant;
+                configuration.RequireHttpsMetadata = false;
             });
     }
 }
