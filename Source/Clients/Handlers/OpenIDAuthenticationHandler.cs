@@ -1,6 +1,6 @@
 namespace Vinder.IdentityProvider.Sdk.Clients.Handlers;
 
-public class OpenIDAuthenticationHandler(IOpenIDConnectClient openIDClient, ClientCredentials credentials) : DelegatingHandler
+public sealed class OpenIDAuthenticationHandler(IOpenIDConnectClient openIDClient, ClientCredentials credentials) : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request, CancellationToken cancellationToken)
