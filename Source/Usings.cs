@@ -21,3 +21,4 @@ global using Vinder.IdentityProvider.Sdk.Payloads.Group;
 global using Vinder.IdentityProvider.Sdk.Payloads.Permission;
 global using Vinder.IdentityProvider.Sdk.Payloads.Common;
 global using Vinder.IdentityProvider.Sdk.Payloads.Tenant;
+global using Vinder.IdentityProvider.Sdk.Payloads.User;
