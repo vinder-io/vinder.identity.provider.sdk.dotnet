@@ -1,4 +1,3 @@
-
 namespace Vinder.IdentityProvider.Sdk.Clients;
 
 public sealed class UsersClient(HttpClient httpClient) : IUsersClient
