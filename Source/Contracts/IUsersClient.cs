@@ -23,4 +23,9 @@ public interface IUsersClient
         Guid userId,
         CancellationToken cancellation = default
     );
+
+    public Task<Result> AssignUserToGroupAsync(
+        AssignUserToGroupContext data,
+        CancellationToken cancellation = default
+    );
 }
