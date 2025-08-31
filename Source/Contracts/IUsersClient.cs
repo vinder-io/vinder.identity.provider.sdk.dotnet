@@ -12,4 +12,15 @@ public interface IUsersClient
         ListUserAssignedPermissionsParameters? parameters = null,
         CancellationToken cancellation = default
     );
+
+    public Task<Result<IReadOnlyCollection<GroupBasicDetails>>> GetUserGroupsAsync(
+        Guid userId,
+        ListUserAssignedGroupsParameters? parameters = null,
+        CancellationToken cancellation = default
+    );
+
+    public Task<Result> DeleteUserAsync(
+        Guid userId,
+        CancellationToken cancellation = default
+    );
 }
