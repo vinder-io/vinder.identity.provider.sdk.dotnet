@@ -28,4 +28,9 @@ public interface IUsersClient
         AssignUserToGroupContext data,
         CancellationToken cancellation = default
     );
+
+    public Task<Result> AssignUserPermissionAsync(
+        AssignUserPermissionContext data,
+        CancellationToken cancellation = default
+    );
 }
