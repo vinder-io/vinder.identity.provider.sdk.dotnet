@@ -35,5 +35,8 @@ public static class IdentityProviderExtension
         services.AddSdkHttpClient<IUsersClient, UsersClient>(options.BaseUrl)
             .WithTenant()
             .WithAuthentication();
+
+        services.AddBearerAuthentication();
+        services.AddAuthorization();
     }
 }
