@@ -30,7 +30,7 @@ jobs:
         run: |
           BASE_VERSION="1.0"
 
-          if [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
             VERSION="${BASE_VERSION}.${GITHUB_RUN_NUMBER}"
           elif [[ "${GITHUB_REF}" == "refs/heads/development" ]]; then
             VERSION="${BASE_VERSION}-beta.${GITHUB_RUN_NUMBER}"
