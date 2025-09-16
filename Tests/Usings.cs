@@ -8,11 +8,11 @@ global using Vinder.IdentityProvider.Sdk.Clients;
 global using Vinder.IdentityProvider.Sdk.Errors;
 
 global using Vinder.IdentityProvider.Sdk.Extensions;
-global using Vinder.IdentityProvider.Sdk.Payloads.Identity;
-global using Vinder.IdentityProvider.Sdk.Payloads.Group;
-global using Vinder.IdentityProvider.Sdk.Payloads.Permission;
-global using Vinder.IdentityProvider.Sdk.Payloads.Tenant;
-global using Vinder.IdentityProvider.Sdk.Payloads.User;
+global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.Identity;
+global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.Group;
+global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.Permission;
+global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.Tenant;
+global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.User;
 global using Vinder.IdentityProvider.Sdk.TestSuite.Fixtures;
 
 /* global usings for third-party namespaces here */
