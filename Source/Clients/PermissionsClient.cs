@@ -62,7 +62,7 @@ public sealed class PermissionsClient(HttpClient httpClient) : IPermissionsClien
             : Result<PermissionDetails>.Failure(SdkErrors.DeserializationFailure);
     }
 
-    public async Task<Result> DeletePermissionAsync(Guid permissionId, CancellationToken cancellation = default)
+    public async Task<Result> DeletePermissionAsync(string permissionId, CancellationToken cancellation = default)
     {
         var response = await httpClient.DeleteAsync($"api/v1/permissions/{permissionId}", cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)

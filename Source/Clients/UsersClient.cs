@@ -37,7 +37,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
     }
 
     public async Task<Result<IReadOnlyCollection<PermissionDetails>>> GetUserPermissionsAsync(
-        Guid userId, ListUserAssignedPermissionsParameters? parameters = null, CancellationToken cancellation = default)
+        string userId, ListUserAssignedPermissionsParameters? parameters = null, CancellationToken cancellation = default)
     {
         string queryString = QueryParametersParser.ToQueryString(parameters);
         string url = $"api/v1/users/{userId}/permissions?{queryString}";
@@ -71,7 +71,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
     }
 
     public async Task<Result<IReadOnlyCollection<GroupBasicDetails>>> GetUserGroupsAsync(
-        Guid userId, ListUserAssignedGroupsParameters? parameters = null, CancellationToken cancellation = default)
+        string userId, ListUserAssignedGroupsParameters? parameters = null, CancellationToken cancellation = default)
     {
         string queryString = QueryParametersParser.ToQueryString(parameters);
         string url = $"api/v1/users/{userId}/groups?{queryString}";
@@ -104,7 +104,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
             : Result<IReadOnlyCollection<GroupBasicDetails>>.Failure(SdkErrors.DeserializationFailure);
     }
 
-    public async Task<Result> DeleteUserAsync(Guid userId, CancellationToken cancellation = default)
+    public async Task<Result> DeleteUserAsync(string userId, CancellationToken cancellation = default)
     {
         var response = await httpClient.DeleteAsync($"api/v1/users/{userId}", cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
@@ -175,7 +175,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
         return Result.Success();
     }
 
-    public async Task<Result> RevokeUserPermissionAsync(Guid userId, Guid permissionId, CancellationToken cancellation = default)
+    public async Task<Result> RevokeUserPermissionAsync(string userId, string permissionId, CancellationToken cancellation = default)
     {
         var response = await httpClient.DeleteAsync($"api/v1/users/{userId}/permissions/{permissionId}", cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
@@ -198,7 +198,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
         return Result.Success();
     }
 
-    public async Task<Result> RemoveUserFromGroupAsync(Guid userId, Guid groupId, CancellationToken cancellation = default)
+    public async Task<Result> RemoveUserFromGroupAsync(string userId, string groupId, CancellationToken cancellation = default)
     {
         var response = await httpClient.DeleteAsync($"api/v1/users/{userId}/groups/{groupId}", cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)

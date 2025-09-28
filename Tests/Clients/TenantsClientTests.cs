@@ -122,7 +122,7 @@ public sealed class TenantsClientTests(IdentityProviderFixture server) :
         /* arrange: prepare update context with the created tenant Id and new name/description */
         var payload = new TenantForUpdate
         {
-            TenantId = Guid.Parse(createResult.Data.Id),
+            TenantId = createResult.Data.Id,
             Name = "vinder.defaults.tenants.updated",
             Description = "Updated tenant description"
         };
@@ -163,7 +163,7 @@ public sealed class TenantsClientTests(IdentityProviderFixture server) :
         var tenantsClient = new TenantsClient(_httpClient);
         var tenantToUpdate = new TenantForUpdate
         {
-            TenantId = Guid.NewGuid(),
+            TenantId = "tenant_Jdahsdn18781263",
             Name = "vinder.defaults.tenants.non.existent",
             Description = "non-existent tenant"
         };
@@ -214,7 +214,7 @@ public sealed class TenantsClientTests(IdentityProviderFixture server) :
         Assert.NotNull(createResult.Data);
 
         /* act: call the delete tenant async method */
-        var deleteResult = await tenantsClient.DeleteTenantAsync(Guid.Parse(createResult.Data.Id));
+        var deleteResult = await tenantsClient.DeleteTenantAsync(createResult.Data.Id);
 
         /* assert: verify that the tenant was deleted successfully */
         Assert.True(deleteResult.IsSuccess);
@@ -242,7 +242,7 @@ public sealed class TenantsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the tenants client */
         var tenantsClient = new TenantsClient(_httpClient);
-        var nonExistentTenantId = Guid.NewGuid();
+        var nonExistentTenantId = "tenant_Jdahsdn18781263";
 
         /* act: call the delete tenant async method */
         var deleteResult = await tenantsClient.DeleteTenantAsync(nonExistentTenantId);

@@ -62,7 +62,7 @@ public sealed class GroupsClient(HttpClient httpClient) : IGroupsClient
             : Result<GroupDetails>.Failure(SdkErrors.DeserializationFailure);
     }
 
-    public async Task<Result> DeleteGroupAsync(Guid groupId, CancellationToken cancellation = default)
+    public async Task<Result> DeleteGroupAsync(string groupId, CancellationToken cancellation = default)
     {
         var response = await httpClient.DeleteAsync($"api/v1/groups/{groupId}", cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
@@ -115,7 +115,7 @@ public sealed class GroupsClient(HttpClient httpClient) : IGroupsClient
             : Result<GroupDetails>.Failure(SdkErrors.DeserializationFailure);
     }
 
-    public async Task<Result> RevokeGroupPermissionAsync(Guid groupId, Guid permissionId, CancellationToken cancellation = default)
+    public async Task<Result> RevokeGroupPermissionAsync(string groupId, string permissionId, CancellationToken cancellation = default)
     {
         var response = await httpClient.DeleteAsync($"api/v1/groups/{groupId}/permissions/{permissionId}", cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
@@ -139,7 +139,7 @@ public sealed class GroupsClient(HttpClient httpClient) : IGroupsClient
     }
 
     public async Task<Result<IReadOnlyCollection<PermissionDetails>>> GetGroupPermissionsAsync(
-        Guid groupId, ListGroupPermissionsParameters? parameters = null, CancellationToken cancellation = default)
+        string groupId, ListGroupPermissionsParameters? parameters = null, CancellationToken cancellation = default)
     {
         string queryString = QueryParametersParser.ToQueryString(parameters);
         string url = $"api/v1/groups/{groupId}/permissions?{queryString}";

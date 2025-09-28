@@ -91,7 +91,7 @@ public sealed class TenantsClient(HttpClient httpClient) : ITenantsClient
             : Result<TenantDetails>.Failure(SdkErrors.DeserializationFailure);
     }
 
-    public async Task<Result> DeleteTenantAsync(Guid tenantId, CancellationToken cancellation = default)
+    public async Task<Result> DeleteTenantAsync(string tenantId, CancellationToken cancellation = default)
     {
         var response = await httpClient.DeleteAsync($"api/v1/tenants/{tenantId}", cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)

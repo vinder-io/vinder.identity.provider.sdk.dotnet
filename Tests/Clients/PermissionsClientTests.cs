@@ -116,7 +116,7 @@ public sealed class PermissionsClientTests(IdentityProviderFixture server) :
         /* arrange: prepare update context with the created permission Id and new name */
         var updateContext = new PermissionForUpdate
         {
-            PermissionId = Guid.Parse(createResult.Data.Id),
+            PermissionId = createResult.Data.Id,
             Name = "vinder.defaults.permissions.updated"
         };
 
@@ -155,7 +155,7 @@ public sealed class PermissionsClientTests(IdentityProviderFixture server) :
         var permissionsClient = new PermissionsClient(_httpClient);
         var updateContext = new PermissionForUpdate
         {
-            PermissionId = Guid.NewGuid(),
+            PermissionId = "permission_kdjWSUywsqr7251",
             Name = "vinder.defaults.permissions.non.existent"
         };
 
@@ -204,7 +204,7 @@ public sealed class PermissionsClientTests(IdentityProviderFixture server) :
         Assert.NotNull(createResult.Data);
 
         /* act: call the delete permission async method */
-        var deleteResult = await permissionsClient.DeletePermissionAsync(Guid.Parse(createResult.Data.Id));
+        var deleteResult = await permissionsClient.DeletePermissionAsync(createResult.Data.Id);
 
         /* assert: verify that the permission was deleted successfully */
         Assert.True(deleteResult.IsSuccess);
@@ -232,7 +232,7 @@ public sealed class PermissionsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the permissions client */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permissionId = Guid.NewGuid();
+        var permissionId = "permission_kdjWSUywsqr7251";
 
         /* act: call the delete permission async method */
         var deleteResult = await permissionsClient.DeletePermissionAsync(permissionId);

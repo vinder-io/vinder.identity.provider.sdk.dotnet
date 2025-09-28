@@ -168,7 +168,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
         Assert.NotNull(createResult.Data);
 
         /* act: call the delete group async method */
-        var deleteResult = await groupsClient.DeleteGroupAsync(Guid.Parse(createResult.Data.Id));
+        var deleteResult = await groupsClient.DeleteGroupAsync(createResult.Data.Id);
 
         /* assert: verify that the group was deleted successfully */
         Assert.True(deleteResult.IsSuccess);
@@ -196,7 +196,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the groups client */
         var groupsClient = new GroupsClient(_httpClient);
-        var groupId = Guid.NewGuid();
+        var groupId = "group_X46587S12445";
 
         /* act: call the delete group async method */
         var deleteResult = await groupsClient.DeleteGroupAsync(groupId);
@@ -259,7 +259,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
         /* arrange: create the assign permission to group object */
         var payload = new AssignGroupPermission
         {
-            GroupId = Guid.Parse(groupResult.Data.Id),
+            GroupId = groupResult.Data.Id,
             PermissionName = permissionResult.Data.Name
         };
 
@@ -325,7 +325,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
         /* arrange: create the assign permission to group object */
         var payload = new AssignGroupPermission
         {
-            GroupId = Guid.Parse(groupResult.Data.Id),
+            GroupId = groupResult.Data.Id,
             PermissionName = permissionResult.Data.Name
         };
 
@@ -336,7 +336,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
         Assert.True(assignResult.IsSuccess);
 
         /* act: call the revoke permission from group async method */
-        var revokeResult = await groupsClient.RevokeGroupPermissionAsync(Guid.Parse(groupResult.Data.Id), Guid.Parse(permissionResult.Data.Id));
+        var revokeResult = await groupsClient.RevokeGroupPermissionAsync(groupResult.Data.Id, permissionResult.Data.Id);
 
         /* assert: verify that the permission was revoked successfully */
         Assert.True(revokeResult.IsSuccess);
@@ -364,8 +364,9 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the groups client */
         var groupsClient = new GroupsClient(_httpClient);
-        var groupId = Guid.NewGuid();
-        var permissionId = Guid.NewGuid();
+
+        var groupId = "group_X46587S12445";
+        var permissionId = "permission_kdjWSUywsqr7251";
 
         /* act: call the revoke permission from group async method */
         var revokeResult = await groupsClient.RevokeGroupPermissionAsync(groupId, permissionId);
@@ -411,10 +412,10 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
         Assert.True(groupResult.IsSuccess);
         Assert.NotNull(groupResult.Data);
 
-        var permissionId = Guid.NewGuid();
+        var permissionId = "permission_kdjWSUywsqr7251";
 
         /* act: call the revoke permission from group async method */
-        var revokeResult = await groupsClient.RevokeGroupPermissionAsync(Guid.Parse(groupResult.Data.Id), permissionId);
+        var revokeResult = await groupsClient.RevokeGroupPermissionAsync(groupResult.Data.Id, permissionId);
 
         /* assert: verify that the revoke failed and the correct error was returned */
         Assert.False(revokeResult.IsSuccess);
@@ -472,7 +473,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
         Assert.NotNull(groupResult.Data);
 
         /* act: call the revoke permission from group async method */
-        var revokeResult = await groupsClient.RevokeGroupPermissionAsync(Guid.Parse(groupResult.Data.Id), Guid.Parse(permissionResult.Data.Id));
+        var revokeResult = await groupsClient.RevokeGroupPermissionAsync(groupResult.Data.Id, permissionResult.Data.Id);
 
         /* assert: verify that the revoke failed and the correct error was returned */
         Assert.False(revokeResult.IsSuccess);

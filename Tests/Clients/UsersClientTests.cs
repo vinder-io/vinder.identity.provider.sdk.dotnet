@@ -83,7 +83,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         Assert.NotNull(user);
 
         /* act: call the delete user async method */
-        var result = await usersClient.DeleteUserAsync(Guid.Parse(user.Id));
+        var result = await usersClient.DeleteUserAsync(user.Id);
 
         /* assert: verify that the user was deleted successfully */
         Assert.True(result.IsSuccess);
@@ -111,7 +111,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the users client */
         var usersClient = new UsersClient(_httpClient);
-        var nonExistentUserId = Guid.NewGuid();
+        var nonExistentUserId = "user_xSAdj12371lsajd";
 
         /* act: call the delete user async method */
         var result = await usersClient.DeleteUserAsync(nonExistentUserId);
@@ -167,7 +167,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         Assert.NotNull(user);
 
         /* act: call the get user permissions async method */
-        var result = await usersClient.GetUserPermissionsAsync(Guid.Parse(user.Id));
+        var result = await usersClient.GetUserPermissionsAsync(user.Id);
 
         /* assert: verify that the permissions were fetched successfully */
         Assert.True(result.IsSuccess);
@@ -196,7 +196,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the users client */
         var usersClient = new UsersClient(_httpClient);
-        var nonExistentUserId = Guid.NewGuid();
+        var nonExistentUserId = "user_xSAdj12371lsajd";
 
         /* act: call the get user permissions async method */
         var result = await usersClient.GetUserPermissionsAsync(nonExistentUserId);
@@ -252,7 +252,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         Assert.NotNull(user);
 
         /* act: call the get user groups async method */
-        var result = await usersClient.GetUserGroupsAsync(Guid.Parse(user.Id));
+        var result = await usersClient.GetUserGroupsAsync(user.Id);
 
         /* assert: verify that the groups were fetched successfully */
         Assert.True(result.IsSuccess);
@@ -281,7 +281,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the users client */
         var usersClient = new UsersClient(_httpClient);
-        var nonExistentUserId = Guid.NewGuid();
+        var nonExistentUserId = "user_xSAdj12371lsajd";
 
         /* act: call the get user groups async method */
         var result = await usersClient.GetUserGroupsAsync(nonExistentUserId);
@@ -347,8 +347,8 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         /* arrange: create the users client and the context for assigning the user to the group */
         var context = new AssignUserToGroupContext
         {
-            UserId = Guid.Parse(user.Id),
-            GroupId = Guid.Parse(groupResult.Data.Id)
+            UserId = user.Id,
+            GroupId = groupResult.Data.Id
         };
 
         /* act: call the assign user to group async method */
@@ -391,8 +391,8 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         var usersClient = new UsersClient(_httpClient);
         var context = new AssignUserToGroupContext
         {
-            UserId = Guid.NewGuid(),
-            GroupId = Guid.Parse(groupResult.Data.Id)
+            UserId = "user_xSAdj12371lsajd",
+            GroupId = groupResult.Data.Id
         };
 
         /* act: call the assign user to group async method */
@@ -450,8 +450,8 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         /* arrange: create the users client and the context for assigning the user to the group */
         var context = new AssignUserToGroupContext
         {
-            UserId = Guid.Parse(user.Id),
-            GroupId = Guid.NewGuid()
+            UserId = user.Id,
+            GroupId = "group_Kjdajmfg12863h"
         };
 
         /* act: call the assign user to group async method */
@@ -518,8 +518,8 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         /* arrange: create the users client and the context for assigning the user to the group */
         var context = new AssignUserToGroupContext
         {
-            UserId = Guid.Parse(user.Id),
-            GroupId = Guid.Parse(groupResult.Data.Id)
+            UserId = user.Id,
+            GroupId = groupResult.Data.Id
         };
 
         /* act: call the assign user to group async method twice */
@@ -587,7 +587,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         /* arrange: create the users client and the context for assigning the permission to the user */
         var context = new AssignUserPermissionContext
         {
-            UserId = Guid.Parse(user.Id),
+            UserId = user.Id,
             PermissionName = permissionResult.Data.Name
         };
 
@@ -631,7 +631,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         var usersClient = new UsersClient(_httpClient);
         var context = new AssignUserPermissionContext
         {
-            UserId = Guid.NewGuid(),
+            UserId = "user_xSAdj12371lsajd",
             PermissionName = permissionResult.Data.Name
         };
 
@@ -690,7 +690,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         /* arrange: create the users client and the context for assigning the permission to the user */
         var context = new AssignUserPermissionContext
         {
-            UserId = Guid.Parse(user.Id),
+            UserId = user.Id,
             PermissionName = "vinder.defaults"
         };
 
@@ -758,7 +758,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         /* arrange: create the users client and the context for assigning the permission to the user */
         var context = new AssignUserPermissionContext
         {
-            UserId = Guid.Parse(user.Id),
+            UserId = user.Id,
             PermissionName = permissionResult.Data.Name
         };
 
@@ -828,14 +828,14 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         /* arrange: create the users client and assign the permission to the user */
         var context = new AssignUserPermissionContext
         {
-            UserId = Guid.Parse(user.Id),
+            UserId = user.Id,
             PermissionName = permissionResult.Data.Name
         };
 
         await usersClient.AssignUserPermissionAsync(context);
 
         /* act: call the revoke user permission async method */
-        var result = await usersClient.RevokeUserPermissionAsync(Guid.Parse(user.Id), Guid.Parse(permissionResult.Data.Id));
+        var result = await usersClient.RevokeUserPermissionAsync(user.Id, permissionResult.Data.Id);
 
         /* assert: verify that the permission was revoked from the user successfully */
         Assert.True(result.IsSuccess);
@@ -874,7 +874,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         var usersClient = new UsersClient(_httpClient);
 
         /* act: call the revoke user permission async method */
-        var result = await usersClient.RevokeUserPermissionAsync(Guid.NewGuid(), Guid.Parse(permissionResult.Data.Id));
+        var result = await usersClient.RevokeUserPermissionAsync("user_xSAdj12371lsajd", permissionResult.Data.Id);
 
         /* assert: verify that the revocation failed and the correct error was returned */
         Assert.False(result.IsSuccess);
@@ -926,7 +926,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         Assert.NotNull(user);
 
         /* act: call the revoke user permission async method */
-        var result = await usersClient.RevokeUserPermissionAsync(Guid.Parse(user.Id), Guid.NewGuid());
+        var result = await usersClient.RevokeUserPermissionAsync(user.Id, "permission_nOdj1238712");
 
         /* assert: verify that the revocation failed and the correct error was returned */
         Assert.False(result.IsSuccess);
@@ -987,7 +987,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         Assert.NotNull(permissionResult.Data);
 
         /* act: call the revoke user permission async method */
-        var result = await usersClient.RevokeUserPermissionAsync(Guid.Parse(user.Id), Guid.Parse(permissionResult.Data.Id));
+        var result = await usersClient.RevokeUserPermissionAsync(user.Id, permissionResult.Data.Id);
 
         /* assert: verify that the revocation failed and the correct error was returned */
         Assert.False(result.IsSuccess);
@@ -1050,14 +1050,14 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         /* arrange: create the users client and assign the user to the group */
         var context = new AssignUserToGroupContext
         {
-            UserId = Guid.Parse(user.Id),
-            GroupId = Guid.Parse(groupResult.Data.Id)
+            UserId = user.Id,
+            GroupId = groupResult.Data.Id
         };
 
         await usersClient.AssignUserToGroupAsync(context);
 
         /* act: call the remove user from group async method */
-        var result = await usersClient.RemoveUserFromGroupAsync(Guid.Parse(user.Id), Guid.Parse(groupResult.Data.Id));
+        var result = await usersClient.RemoveUserFromGroupAsync(user.Id, groupResult.Data.Id);
 
         /* assert: verify that the user was removed from the group successfully */
         Assert.True(result.IsSuccess);
@@ -1096,7 +1096,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         var usersClient = new UsersClient(_httpClient);
 
         /* act: call the remove user from group async method */
-        var result = await usersClient.RemoveUserFromGroupAsync(Guid.NewGuid(), Guid.Parse(groupResult.Data.Id));
+        var result = await usersClient.RemoveUserFromGroupAsync("user_xSAdj12371lsajd", groupResult.Data.Id);
 
         /* assert: verify that the removal failed and the correct error was returned */
         Assert.False(result.IsSuccess);
@@ -1148,7 +1148,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         Assert.NotNull(user);
 
         /* act: call the remove user from group async method */
-        var result = await usersClient.RemoveUserFromGroupAsync(Guid.Parse(user.Id), Guid.NewGuid());
+        var result = await usersClient.RemoveUserFromGroupAsync(user.Id, "group_lKi123fu29379");
 
         /* assert: verify that the removal failed and the correct error was returned */
         Assert.False(result.IsSuccess);
@@ -1209,7 +1209,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         Assert.NotNull(groupResult.Data);
 
         /* act: call the remove user from group async method */
-        var result = await usersClient.RemoveUserFromGroupAsync(Guid.Parse(user.Id), Guid.Parse(groupResult.Data.Id));
+        var result = await usersClient.RemoveUserFromGroupAsync(user.Id, groupResult.Data.Id);
 
         /* assert: verify that the removal failed and the correct error was returned */
         Assert.False(result.IsSuccess);
