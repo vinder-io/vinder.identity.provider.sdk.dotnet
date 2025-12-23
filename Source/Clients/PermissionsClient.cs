@@ -2,7 +2,7 @@ namespace Vinder.IdentityProvider.Sdk.Clients;
 
 public sealed class PermissionsClient(HttpClient httpClient) : IPermissionsClient
 {
-    public async Task<Result<PermissionDetails>> CreatePermissionAsync(PermissionForCreation permission, CancellationToken cancellation = default)
+    public async Task<Result<PermissionDetails>> CreatePermissionAsync(PermissionCreationScheme permission, CancellationToken cancellation = default)
     {
         var response = await httpClient.PostAsJsonAsync("api/v1/permissions", permission, cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
@@ -32,7 +32,7 @@ public sealed class PermissionsClient(HttpClient httpClient) : IPermissionsClien
             : Result<PermissionDetails>.Failure(SdkErrors.DeserializationFailure);
     }
 
-    public async Task<Result<PermissionDetails>> UpdatePermissionAsync(PermissionForUpdate permission, CancellationToken cancellation = default)
+    public async Task<Result<PermissionDetails>> UpdatePermissionAsync(PermissionUpdateScheme permission, CancellationToken cancellation = default)
     {
         var response = await httpClient.PutAsJsonAsync($"api/v1/permissions/{permission.PermissionId}", permission, cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)

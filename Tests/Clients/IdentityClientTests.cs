@@ -46,7 +46,7 @@ public sealed class IdentityClientTests(IdentityProviderFixture server) :
 
         /* assert: ensure the authentication failed */
         Assert.False(result.IsSuccess);
-        Assert.Equal(AuthenticationErrors.UserNotFound, result.Error);
+        Assert.Equal(AuthenticationErrors.InvalidCredentials, result.Error);
     }
 
     [Fact(DisplayName = "[e2e] - when authenticate with valid user but wrong password should return #VINDER-IDP-ERR-AUT-401 error")]

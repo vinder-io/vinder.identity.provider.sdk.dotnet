@@ -337,22 +337,15 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create a group */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation { Name = "vinder.defaults.groups.for.user.assignment" };
+        var group = new GroupCreationScheme { Name = "vinder.defaults.groups.for.user.assignment" };
 
         var groupResult = await groupsClient.CreateGroupAsync(group);
 
         Assert.True(groupResult.IsSuccess);
         Assert.NotNull(groupResult.Data);
 
-        /* arrange: create the users client and the context for assigning the user to the group */
-        var context = new AssignUserToGroupContext
-        {
-            UserId = user.Id,
-            GroupId = groupResult.Data.Id
-        };
-
         /* act: call the assign user to group async method */
-        var result = await usersClient.AssignUserToGroupAsync(context);
+        var result = await usersClient.AssignUserGroupAsync(user.Id, groupResult.Data.Id);
 
         /* assert: verify that the user was assigned to the group successfully */
         Assert.True(result.IsSuccess);
@@ -380,7 +373,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create a group */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation { Name = "vinder.defaults.groups.for.non-existent.user.assignment" };
+        var group = new GroupCreationScheme { Name = "vinder.defaults.groups.for.non-existent.user.assignment" };
 
         var groupResult = await groupsClient.CreateGroupAsync(group);
 
@@ -389,14 +382,9 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the users client and the context for assigning the user to the group */
         var usersClient = new UsersClient(_httpClient);
-        var context = new AssignUserToGroupContext
-        {
-            UserId = "user_xSAdj12371lsajd",
-            GroupId = groupResult.Data.Id
-        };
 
         /* act: call the assign user to group async method */
-        var result = await usersClient.AssignUserToGroupAsync(context);
+        var result = await usersClient.AssignUserGroupAsync("user_xSAdj12371lsajd", groupResult.Data.Id);
 
         /* assert: verify that the assignment failed and the correct error was returned */
         Assert.False(result.IsSuccess);
@@ -447,15 +435,8 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         Assert.NotNull(user);
 
-        /* arrange: create the users client and the context for assigning the user to the group */
-        var context = new AssignUserToGroupContext
-        {
-            UserId = user.Id,
-            GroupId = "group_Kjdajmfg12863h"
-        };
-
         /* act: call the assign user to group async method */
-        var result = await usersClient.AssignUserToGroupAsync(context);
+        var result = await usersClient.AssignUserGroupAsync(user.Id, "group_Kjdajmfg12863h");
 
         /* assert: verify that the assignment failed and the correct error was returned */
         Assert.False(result.IsSuccess);
@@ -508,24 +489,17 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create a group */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation { Name = "vinder.defaults.groups.for.duplicate.user.assignment" };
+        var group = new GroupCreationScheme { Name = "vinder.defaults.groups.for.duplicate.user.assignment" };
 
         var groupResult = await groupsClient.CreateGroupAsync(group);
 
         Assert.True(groupResult.IsSuccess);
         Assert.NotNull(groupResult.Data);
 
-        /* arrange: create the users client and the context for assigning the user to the group */
-        var context = new AssignUserToGroupContext
-        {
-            UserId = user.Id,
-            GroupId = groupResult.Data.Id
-        };
-
         /* act: call the assign user to group async method twice */
-        await usersClient.AssignUserToGroupAsync(context);
+        await usersClient.AssignUserGroupAsync(user.Id, groupResult.Data.Id);
 
-        var result = await usersClient.AssignUserToGroupAsync(context);
+        var result = await usersClient.AssignUserGroupAsync(user.Id, groupResult.Data.Id);
 
         /* assert: verify that the second assignment failed and the correct error was returned */
         Assert.False(result.IsSuccess);
@@ -577,7 +551,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create a permission */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permission = new PermissionForCreation { Name = "vinder.defaults.permissions.for.user.assignment" };
+        var permission = new PermissionCreationScheme { Name = "vinder.defaults.permissions.for.user.assignment" };
 
         var permissionResult = await permissionsClient.CreatePermissionAsync(permission);
 
@@ -585,14 +559,9 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         Assert.NotNull(permissionResult.Data);
 
         /* arrange: create the users client and the context for assigning the permission to the user */
-        var context = new AssignUserPermissionContext
-        {
-            UserId = user.Id,
-            PermissionName = permissionResult.Data.Name
-        };
 
         /* act: call the assign user permission async method */
-        var result = await usersClient.AssignUserPermissionAsync(context);
+        var result = await usersClient.AssignUserPermissionAsync(user.Id, permissionResult.Data.Name);
 
         /* assert: verify that the permission was assigned to the user successfully */
         Assert.True(result.IsSuccess);
@@ -620,7 +589,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create a permission */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permission = new PermissionForCreation { Name = "vinder.defaults.permissions.for.non-existent.user.assignment" };
+        var permission = new PermissionCreationScheme { Name = "vinder.defaults.permissions.for.non-existent.user.assignment" };
 
         var permissionResult = await permissionsClient.CreatePermissionAsync(permission);
 
@@ -629,14 +598,9 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the users client and the context for assigning the permission to the user */
         var usersClient = new UsersClient(_httpClient);
-        var context = new AssignUserPermissionContext
-        {
-            UserId = "user_xSAdj12371lsajd",
-            PermissionName = permissionResult.Data.Name
-        };
 
         /* act: call the assign user permission async method */
-        var result = await usersClient.AssignUserPermissionAsync(context);
+        var result = await usersClient.AssignUserPermissionAsync("user_xSAdj12371lsajd", permissionResult.Data.Name);
 
         /* assert: verify that the assignment failed and the correct error was returned */
         Assert.False(result.IsSuccess);
@@ -687,15 +651,8 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         Assert.NotNull(user);
 
-        /* arrange: create the users client and the context for assigning the permission to the user */
-        var context = new AssignUserPermissionContext
-        {
-            UserId = user.Id,
-            PermissionName = "vinder.defaults"
-        };
-
         /* act: call the assign user permission async method */
-        var result = await usersClient.AssignUserPermissionAsync(context);
+        var result = await usersClient.AssignUserPermissionAsync(user.Id, "vinder.defaults");
 
         /* assert: verify that the assignment failed and the correct error was returned */
         Assert.False(result.IsSuccess);
@@ -748,7 +705,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create a permission */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permission = new PermissionForCreation { Name = "vinder.defaults.permissions.for.duplicate.user.assignment" };
+        var permission = new PermissionCreationScheme { Name = "vinder.defaults.permissions.for.duplicate.user.assignment" };
 
         var permissionResult = await permissionsClient.CreatePermissionAsync(permission);
 
@@ -756,16 +713,11 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         Assert.NotNull(permissionResult.Data);
 
         /* arrange: create the users client and the context for assigning the permission to the user */
-        var context = new AssignUserPermissionContext
-        {
-            UserId = user.Id,
-            PermissionName = permissionResult.Data.Name
-        };
 
         /* act: call the assign user permission async method twice */
-        await usersClient.AssignUserPermissionAsync(context);
+        await usersClient.AssignUserPermissionAsync(user.Id, permissionResult.Data.Id);
 
-        var result = await usersClient.AssignUserPermissionAsync(context);
+        var result = await usersClient.AssignUserPermissionAsync(user.Id, permissionResult.Data.Id);
 
         /* assert: verify that the second assignment failed and the correct error was returned */
         Assert.False(result.IsSuccess);
@@ -818,21 +770,14 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create a permission */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permission = new PermissionForCreation { Name = "vinder.defaults.permissions.for.user.revocation" };
+        var permission = new PermissionCreationScheme { Name = "vinder.defaults.permissions.for.user.revocation" };
 
         var permissionResult = await permissionsClient.CreatePermissionAsync(permission);
 
         Assert.True(permissionResult.IsSuccess);
         Assert.NotNull(permissionResult.Data);
 
-        /* arrange: create the users client and assign the permission to the user */
-        var context = new AssignUserPermissionContext
-        {
-            UserId = user.Id,
-            PermissionName = permissionResult.Data.Name
-        };
-
-        await usersClient.AssignUserPermissionAsync(context);
+        await usersClient.AssignUserPermissionAsync(user.Id, permissionResult.Data.Id);
 
         /* act: call the revoke user permission async method */
         var result = await usersClient.RevokeUserPermissionAsync(user.Id, permissionResult.Data.Id);
@@ -863,7 +808,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create a permission */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permission = new PermissionForCreation { Name = "vinder.defaults.permissions.for.non-existent.user.revocation" };
+        var permission = new PermissionCreationScheme { Name = "vinder.defaults.permissions.for.non-existent.user.revocation" };
 
         var permissionResult = await permissionsClient.CreatePermissionAsync(permission);
 
@@ -979,7 +924,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create a permission */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permission = new PermissionForCreation { Name = "vinder.defaults.permissions.for.not-assigned.revocation" };
+        var permission = new PermissionCreationScheme { Name = "vinder.defaults.permissions.for.not-assigned.revocation" };
 
         var permissionResult = await permissionsClient.CreatePermissionAsync(permission);
 
@@ -1040,21 +985,14 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create a group */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation { Name = "vinder.defaults.groups.for.user.removal" };
+        var group = new GroupCreationScheme { Name = "vinder.defaults.groups.for.user.removal" };
 
         var groupResult = await groupsClient.CreateGroupAsync(group);
 
         Assert.True(groupResult.IsSuccess);
         Assert.NotNull(groupResult.Data);
 
-        /* arrange: create the users client and assign the user to the group */
-        var context = new AssignUserToGroupContext
-        {
-            UserId = user.Id,
-            GroupId = groupResult.Data.Id
-        };
-
-        await usersClient.AssignUserToGroupAsync(context);
+        await usersClient.AssignUserGroupAsync(user.Id, groupResult.Data.Id);
 
         /* act: call the remove user from group async method */
         var result = await usersClient.RemoveUserFromGroupAsync(user.Id, groupResult.Data.Id);
@@ -1085,7 +1023,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create a group */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation { Name = "vinder.defaults.groups.for.non-existent.user.removal" };
+        var group = new GroupCreationScheme { Name = "vinder.defaults.groups.for.non-existent.user.removal" };
 
         var groupResult = await groupsClient.CreateGroupAsync(group);
 
@@ -1201,7 +1139,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
 
         /* arrange: create a group */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation { Name = "vinder.defaults.groups.for.not-in-group.removal" };
+        var group = new GroupCreationScheme { Name = "vinder.defaults.groups.for.not-in-group.removal" };
 
         var groupResult = await groupsClient.CreateGroupAsync(group);
 

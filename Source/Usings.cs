@@ -13,6 +13,8 @@ global using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 /* global usings for SDK namespaces here */
 
+global using Vinder.Internal.Essentials.Patterns;
+
 global using Vinder.IdentityProvider.Sdk.Serializers;
 global using Vinder.IdentityProvider.Sdk.Errors;
 global using Vinder.IdentityProvider.Sdk.Helpers;
@@ -20,7 +22,6 @@ global using Vinder.IdentityProvider.Sdk.Clients;
 global using Vinder.IdentityProvider.Sdk.Clients.Handlers;
 global using Vinder.IdentityProvider.Sdk.Configurations;
 
-global using Vinder.IdentityProvider.Sdk.Contracts.Internal;
 global using Vinder.IdentityProvider.Sdk.Contracts.Clients;
 global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.Identity;
 global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.Group;

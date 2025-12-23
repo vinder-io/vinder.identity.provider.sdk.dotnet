@@ -27,7 +27,7 @@ public sealed class TenantsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the tenants client and the tenant to create */
         var tenantsClient = new TenantsClient(_httpClient);
-        var tenant = new TenantForCreation
+        var tenant = new TenantCreationScheme
         {
             Name = "vinder.defaults.tenants.testing",
             Description = "Tenant for testing purposes"
@@ -68,7 +68,7 @@ public sealed class TenantsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the tenants client and the tenant to create */
         var tenantsClient = new TenantsClient(_httpClient);
-        var tenant = new TenantForCreation
+        var tenant = new TenantCreationScheme
         {
             Name = "vinder.defaults.tenants.existing",
             Description = "Tenant for testing purposes"
@@ -108,7 +108,7 @@ public sealed class TenantsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the tenants client and the tenant to create */
         var tenantsClient = new TenantsClient(_httpClient);
-        var tenantToCreate = new TenantForCreation
+        var tenantToCreate = new TenantCreationScheme
         {
             Name = "vinder.defaults.tenants.to.update",
             Description = "Tenant to be updated"
@@ -120,7 +120,7 @@ public sealed class TenantsClientTests(IdentityProviderFixture server) :
         Assert.NotNull(createResult.Data);
 
         /* arrange: prepare update context with the created tenant Id and new name/description */
-        var payload = new TenantForUpdate
+        var payload = new TenantUpdateScheme
         {
             TenantId = createResult.Data.Id,
             Name = "vinder.defaults.tenants.updated",
@@ -161,7 +161,7 @@ public sealed class TenantsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the tenants client and prepare update context for a non-existent tenant */
         var tenantsClient = new TenantsClient(_httpClient);
-        var tenantToUpdate = new TenantForUpdate
+        var tenantToUpdate = new TenantUpdateScheme
         {
             TenantId = "tenant_Jdahsdn18781263",
             Name = "vinder.defaults.tenants.non.existent",
@@ -200,7 +200,7 @@ public sealed class TenantsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the tenants client and the tenant to create */
         var tenantsClient = new TenantsClient(_httpClient);
-        var tenantToCreate = new TenantForCreation
+        var tenantToCreate = new TenantCreationScheme
         {
             Name = "vinder.defaults.tenants.to.delete",
             Description = "Tenant to be deleted"

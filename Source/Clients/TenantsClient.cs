@@ -31,7 +31,7 @@ public sealed class TenantsClient(HttpClient httpClient) : ITenantsClient
             : Result<Pagination<TenantDetails>>.Failure(SdkErrors.DeserializationFailure);
     }
 
-    public async Task<Result<TenantDetails>> CreateTenantAsync(TenantForCreation tenant, CancellationToken cancellation = default)
+    public async Task<Result<TenantDetails>> CreateTenantAsync(TenantCreationScheme tenant, CancellationToken cancellation = default)
     {
         var response = await httpClient.PostAsJsonAsync("api/v1/tenants", tenant, cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
@@ -61,7 +61,7 @@ public sealed class TenantsClient(HttpClient httpClient) : ITenantsClient
             : Result<TenantDetails>.Failure(SdkErrors.DeserializationFailure);
     }
 
-    public async Task<Result<TenantDetails>> UpdateTenantAsync(TenantForUpdate tenant, CancellationToken cancellation = default)
+    public async Task<Result<TenantDetails>> UpdateTenantAsync(TenantUpdateScheme tenant, CancellationToken cancellation = default)
     {
         var response = await httpClient.PutAsJsonAsync($"api/v1/tenants/{tenant.TenantId}", tenant, cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
