@@ -2,7 +2,7 @@ namespace Vinder.IdentityProvider.Sdk.Clients;
 
 public sealed class GroupsClient(HttpClient httpClient) : IGroupsClient
 {
-    public async Task<Result<GroupDetails>> CreateGroupAsync(GroupForCreation group, CancellationToken cancellation = default)
+    public async Task<Result<GroupDetails>> CreateGroupAsync(GroupCreationScheme group, CancellationToken cancellation = default)
     {
         var response = await httpClient.PostAsJsonAsync("api/v1/groups", group, cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
@@ -32,7 +32,7 @@ public sealed class GroupsClient(HttpClient httpClient) : IGroupsClient
             : Result<GroupDetails>.Failure(SdkErrors.DeserializationFailure);
     }
 
-    public async Task<Result<GroupDetails>> UpdateGroupAsync(GroupUpdateContext group, CancellationToken cancellation = default)
+    public async Task<Result<GroupDetails>> UpdateGroupAsync(GroupUpdateScheme group, CancellationToken cancellation = default)
     {
         var response = await httpClient.PutAsJsonAsync($"api/v1/groups/{group.Id}", group, cancellation);
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
@@ -85,9 +85,11 @@ public sealed class GroupsClient(HttpClient httpClient) : IGroupsClient
         return Result.Success();
     }
 
-    public async Task<Result<GroupDetails>> AssignGroupPermissionAsync(AssignGroupPermission data, CancellationToken cancellation = default)
+    public async Task<Result<GroupDetails>> AssignGroupPermissionAsync(string groupId, string permission, CancellationToken cancellation = default)
     {
-        var response = await httpClient.PostAsJsonAsync($"api/v1/groups/{data.GroupId}/permissions", data, cancellation);
+        var payload = new { permissionName = permission };
+        var response = await httpClient.PostAsJsonAsync($"api/v1/groups/{groupId}/permissions", payload, cancellation);
+
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
         {
             return Result<GroupDetails>.Failure(SdkErrors.Unauthorized);

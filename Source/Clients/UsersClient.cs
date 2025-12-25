@@ -3,7 +3,7 @@ namespace Vinder.IdentityProvider.Sdk.Clients;
 public sealed class UsersClient(HttpClient httpClient) : IUsersClient
 {
     public async Task<Result<Pagination<UserDetails>>> GetUsersAsync(
-        UsersFetchParameters parameters, CancellationToken cancellation = default)
+        UsersFetchParameters? parameters = null, CancellationToken cancellation = default)
     {
         string queryString = QueryParametersParser.ToQueryString(parameters);
         string url = $"api/v1/users?{queryString}";
@@ -127,10 +127,11 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
         return Result.Success();
     }
 
-    public async Task<Result> AssignUserToGroupAsync(
-        AssignUserToGroupContext data, CancellationToken cancellation = default)
+    public async Task<Result> AssignUserGroupAsync(string userId, string groupId, CancellationToken cancellation = default)
     {
-        var response = await httpClient.PostAsJsonAsync($"api/v1/users/{data.UserId}/groups", data, cancellation);
+        var payload = new { groupId };
+        var response = await httpClient.PostAsJsonAsync($"api/v1/users/{userId}/groups", payload, cancellation);
+
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
         {
             return Result.Failure(SdkErrors.Unauthorized);
@@ -151,10 +152,11 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
         return Result.Success();
     }
 
-    public async Task<Result> AssignUserPermissionAsync(
-        AssignUserPermissionContext data, CancellationToken cancellation = default)
+    public async Task<Result> AssignUserPermissionAsync(string userId, string permission, CancellationToken cancellation = default)
     {
-        var response = await httpClient.PostAsJsonAsync($"api/v1/users/{data.UserId}/permissions", data, cancellation);
+        var payload = new { permissionName = permission };
+        var response = await httpClient.PostAsJsonAsync($"api/v1/users/{userId}/permissions", payload, cancellation);
+
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
         {
             return Result.Failure(SdkErrors.Unauthorized);

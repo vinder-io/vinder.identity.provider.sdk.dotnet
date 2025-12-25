@@ -27,7 +27,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the groups client and the group to create */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation
+        var group = new GroupCreationScheme
         {
             Name = "vinder.defaults.groups.testing"
         };
@@ -67,7 +67,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the groups client */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation
+        var group = new GroupCreationScheme
         {
             Name = "vinder.defaults.groups.to.update"
         };
@@ -78,7 +78,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
         Assert.NotNull(createResult.Data);
 
         /* arrange: prepare update context with the created group Id and new name */
-        var updateContext = new GroupUpdateContext
+        var updateContext = new GroupUpdateScheme
         {
             Id = createResult.Data.Id,
             Name = "vinder.defaults.groups.updated"
@@ -117,7 +117,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the groups client and prepare update context for a non-existent group */
         var groupsClient = new GroupsClient(_httpClient);
-        var updateContext = new GroupUpdateContext
+        var updateContext = new GroupUpdateScheme
         {
             Id = Guid.NewGuid().ToString(),
             Name = "vinder.defaults.groups.non.existent"
@@ -155,7 +155,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the groups client and the group to create */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation
+        var group = new GroupCreationScheme
         {
             Name = "vinder.defaults.groups.to.delete"
         };
@@ -230,7 +230,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the permissions client and the permission to create */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permission = new PermissionForCreation
+        var permission = new PermissionCreationScheme
         {
             Name = "vinder.defaults.permissions.to.assign"
         };
@@ -244,7 +244,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the groups client and the group to create */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation
+        var group = new GroupCreationScheme
         {
             Name = "vinder.defaults.groups.to.assign.permission"
         };
@@ -257,14 +257,14 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
         Assert.NotNull(groupResult.Data);
 
         /* arrange: create the assign permission to group object */
-        var payload = new AssignGroupPermission
+        var parameters = new AssignGroupPermission
         {
             GroupId = groupResult.Data.Id,
             PermissionName = permissionResult.Data.Name
         };
 
         /* act: call the assign permission to group async method */
-        var assignResult = await groupsClient.AssignGroupPermissionAsync(payload);
+        var assignResult = await groupsClient.AssignGroupPermissionAsync(parameters.GroupId, parameters.PermissionName);
 
         /* assert: verify that the permission was assigned successfully */
         Assert.True(assignResult.IsSuccess);
@@ -296,7 +296,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the permissions client and the permission to create */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permission = new PermissionForCreation
+        var permission = new PermissionCreationScheme
         {
             Name = "vinder.defaults.permissions.to.revoke"
         };
@@ -310,7 +310,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the groups client and the group to create */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation
+        var group = new GroupCreationScheme
         {
             Name = "vinder.defaults.groups.to.revoke.permission"
         };
@@ -323,14 +323,14 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
         Assert.NotNull(groupResult.Data);
 
         /* arrange: create the assign permission to group object */
-        var payload = new AssignGroupPermission
+        var parameters = new AssignGroupPermission
         {
             GroupId = groupResult.Data.Id,
             PermissionName = permissionResult.Data.Name
         };
 
         /* act: call the assign permission to group async method */
-        var assignResult = await groupsClient.AssignGroupPermissionAsync(payload);
+        var assignResult = await groupsClient.AssignGroupPermissionAsync(parameters.GroupId, parameters.PermissionName);
 
         /* assert: verify that the permission was assigned successfully */
         Assert.True(assignResult.IsSuccess);
@@ -400,7 +400,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the groups client and the group to create */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation
+        var group = new GroupCreationScheme
         {
             Name = "vinder.defaults.groups.revoke.non.existent.permission"
         };
@@ -446,7 +446,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the permissions client and the permission to create */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permission = new PermissionForCreation
+        var permission = new PermissionCreationScheme
         {
             Name = "vinder.defaults.permissions.not.assigned"
         };
@@ -460,7 +460,7 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the groups client and the group to create */
         var groupsClient = new GroupsClient(_httpClient);
-        var group = new GroupForCreation
+        var group = new GroupCreationScheme
         {
             Name = "vinder.defaults.groups.revoke.not.assigned.permission"
         };

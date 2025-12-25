@@ -27,7 +27,7 @@ public sealed class PermissionsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the permissions client and the permission to create */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permission = new PermissionForCreation
+        var permission = new PermissionCreationScheme
         {
             Name = "vinder.defaults.permissions.testing"
         };
@@ -64,7 +64,7 @@ public sealed class PermissionsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the permissions client and the permission to create */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permission = new PermissionForCreation
+        var permission = new PermissionCreationScheme
         {
             Name = "vinder.defaults.permissions.already.exists"
         };
@@ -103,7 +103,7 @@ public sealed class PermissionsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the permissions client and a new permission */
         var permissionsClient = new PermissionsClient(_httpClient.WithTenantHeader("master"));
-        var permissionToCreate = new PermissionForCreation
+        var permissionToCreate = new PermissionCreationScheme
         {
             Name = "vinder.defaults.permissions.to.update"
         };
@@ -114,7 +114,7 @@ public sealed class PermissionsClientTests(IdentityProviderFixture server) :
         Assert.NotNull(createResult.Data);
 
         /* arrange: prepare update context with the created permission Id and new name */
-        var updateContext = new PermissionForUpdate
+        var updateContext = new PermissionUpdateScheme
         {
             PermissionId = createResult.Data.Id,
             Name = "vinder.defaults.permissions.updated"
@@ -153,7 +153,7 @@ public sealed class PermissionsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the permissions client and prepare update context for a non-existent permission */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var updateContext = new PermissionForUpdate
+        var updateContext = new PermissionUpdateScheme
         {
             PermissionId = "permission_kdjWSUywsqr7251",
             Name = "vinder.defaults.permissions.non.existent"
@@ -191,7 +191,7 @@ public sealed class PermissionsClientTests(IdentityProviderFixture server) :
 
         /* arrange: create the permissions client and the permission to create */
         var permissionsClient = new PermissionsClient(_httpClient);
-        var permission = new PermissionForCreation
+        var permission = new PermissionCreationScheme
         {
             Name = "vinder.defaults.permissions.to.delete"
         };
