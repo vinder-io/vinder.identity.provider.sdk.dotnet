@@ -712,12 +712,10 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         Assert.True(permissionResult.IsSuccess);
         Assert.NotNull(permissionResult.Data);
 
-        /* arrange: create the users client and the context for assigning the permission to the user */
-
         /* act: call the assign user permission async method twice */
-        await usersClient.AssignUserPermissionAsync(user.Id, permissionResult.Data.Id);
+        await usersClient.AssignUserPermissionAsync(user.Id, permissionResult.Data.Name);
 
-        var result = await usersClient.AssignUserPermissionAsync(user.Id, permissionResult.Data.Id);
+        var result = await usersClient.AssignUserPermissionAsync(user.Id, permissionResult.Data.Name);
 
         /* assert: verify that the second assignment failed and the correct error was returned */
         Assert.False(result.IsSuccess);
@@ -777,7 +775,7 @@ public sealed class UsersClientTests(IdentityProviderFixture server) :
         Assert.True(permissionResult.IsSuccess);
         Assert.NotNull(permissionResult.Data);
 
-        await usersClient.AssignUserPermissionAsync(user.Id, permissionResult.Data.Id);
+        await usersClient.AssignUserPermissionAsync(user.Id, permissionResult.Data.Name);
 
         /* act: call the revoke user permission async method */
         var result = await usersClient.RevokeUserPermissionAsync(user.Id, permissionResult.Data.Id);
