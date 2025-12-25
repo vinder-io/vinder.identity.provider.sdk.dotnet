@@ -481,4 +481,50 @@ public sealed class GroupsClientTests(IdentityProviderFixture server) :
         Assert.NotNull(revokeResult.Error);
         Assert.Equal(GroupErrors.PermissionNotAssigned, revokeResult.Error);
     }
+
+    [Fact(DisplayName = "[e2e] - when get groups with no parameters should return created group")]
+    public async Task WhenGetGroups_WithNoParameters_ShouldReturnCreatedGroup()
+    {
+        /* arrange: create an identity client with the proper tenant header and define admin credentials */
+        var identityClient = new IdentityClient(_httpClient.WithTenantHeader("master"));
+        var credentials = new AuthenticationCredentials
+        {
+            Username = "admin",
+            Password = "admin"
+        };
+
+        /* act: send a POST request to the authenticate endpoint using the identity client */
+        var authenticationResult = await identityClient.AuthenticateAsync(credentials);
+
+        /* assert: ensure the authentication was successful and the result contains data */
+        Assert.True(authenticationResult.IsSuccess);
+        Assert.NotNull(authenticationResult.Data);
+
+        _httpClient.WithAuthorization(authenticationResult.Data.AccessToken);
+
+        /* arrange: create the groups client and the group to create */
+        var groupsClient = new GroupsClient(_httpClient);
+        var group = new GroupCreationScheme
+        {
+            Name = $"vinder.defaults.groups.getgroups.{Guid.NewGuid()}"
+        };
+
+        /* act: call the create group async method */
+        var createResult = await groupsClient.CreateGroupAsync(group);
+
+        /* assert: verify that the group was created successfully */
+        Assert.True(createResult.IsSuccess);
+        Assert.NotNull(createResult.Data);
+        Assert.NotNull(createResult.Data.Id);
+
+        /* act: call the get groups async method with no parameters */
+        var result = await groupsClient.GetGroupsAsync();
+
+        /* assert: verify that the created group is present in the result */
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Data);
+
+        Assert.NotEmpty(result.Data.Items);
+        Assert.Contains(result.Data.Items, group => group.Id == createResult.Data.Id && group.Name == group.Name);
+    }
 }
