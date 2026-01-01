@@ -7,8 +7,8 @@ public static class IdentityProviderExtension
         var options = new IdentityProviderOptions();
         configure(options);
 
-        services.AddSingleton<OpenIDAuthenticationHandler>();
-        services.AddSingleton<TenantHandler>();
+        services.AddTransient<OpenIDAuthenticationHandler>();
+        services.AddTransient<TenantHandler>();
 
         services.AddSingleton(options);
         services.AddHttpClient<IOpenIDConnectClient, OpenIDConnectClient>(client =>
