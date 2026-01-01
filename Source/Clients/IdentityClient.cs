@@ -29,7 +29,7 @@ public sealed class IdentityClient(HttpClient httpClient) : IIdentityClient
             : Result<AuthenticationResult>.Failure(SdkErrors.DeserializationFailure);
     }
 
-    public async Task<Result> CreateIdentityAsync(IdentityEnrollmentCredentials credentials, CancellationToken cancellation = default)
+    public async Task<Result<UserDetails>> CreateIdentityAsync(IdentityEnrollmentCredentials credentials, CancellationToken cancellation = default)
     {
         var response = await httpClient.PostAsJsonAsync("api/v1/identity", credentials, cancellation);
         if (response.IsSuccessStatusCode is false)
@@ -40,11 +40,18 @@ public sealed class IdentityClient(HttpClient httpClient) : IIdentityClient
             );
 
             return error is not null
-                ? Result.Failure(error)
-                : Result.Failure(SdkErrors.DeserializationFailure);
+                ? Result<UserDetails>.Failure(error)
+                : Result<UserDetails>.Failure(SdkErrors.DeserializationFailure);
         }
 
-        return Result.Success();
+        var result = await response.Content.ReadFromJsonAsync<UserDetails>(
+            options: JsonSerialization.SerializerOptions,
+            cancellationToken: cancellation
+        );
+
+        return result is not null
+            ? Result<UserDetails>.Success(result)
+            : Result<UserDetails>.Failure(SdkErrors.DeserializationFailure);
     }
 
     public async Task<Result> InvalidateSessionAsync(SessionInvalidation session, CancellationToken cancellation = default)
