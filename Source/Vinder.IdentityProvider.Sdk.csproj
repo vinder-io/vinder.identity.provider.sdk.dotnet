@@ -18,7 +18,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.8" />
-    <PackageReference Include="Vinder.IdentityProvider.Sdk.Contracts" Version="1.0.7" />
+    <PackageReference Include="Vinder.IdentityProvider.Sdk.Contracts" Version="1.0.8" />
   </ItemGroup>
 
 </Project>
