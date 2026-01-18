@@ -14,7 +14,7 @@ public sealed class OpenIDConnectClient(HttpClient httpClient) : IOpenIDConnectC
 
         var formContent = new FormUrlEncodedContent(parameters);
 
-        var response = await httpClient.PostAsync("api/v1/openid/connect/token", formContent, cancellation);
+        var response = await httpClient.PostAsync("api/v1/protocol/open-id/connect/token", formContent, cancellation);
         if (response.IsSuccessStatusCode is false)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
