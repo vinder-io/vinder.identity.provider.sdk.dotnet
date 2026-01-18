@@ -1,4 +1,4 @@
-namespace Vinder.IdentityProvider.Sdk.TestSuite.Clients;
+namespace Vinder.Federation.Sdk.TestSuite.Clients;
 
 public sealed class GroupsClientTests(IdentityProviderFixture server) :
     IClassFixture<IdentityProviderFixture>

@@ -1,4 +1,4 @@
-namespace Vinder.IdentityProvider.Sdk.TestSuite.Fixtures;
+namespace Vinder.Federation.Sdk.TestSuite.Fixtures;
 
 public sealed class IdentityProviderFixture : IAsyncLifetime
 {
@@ -33,14 +33,14 @@ public sealed class IdentityProviderFixture : IAsyncLifetime
         var secretKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
 
         _identityProviderContainer = new ContainerBuilder()
-            .WithImage("vinderio/identity.provider:latest")
+            .WithImage("vinderio/federation:latest")
             .WithCleanUp(true)
             .WithNetwork(_network)
             .WithExposedPort(8080)
             .WithPortBinding(0, 8080)
             .WithEnvironment("Settings__Database__ConnectionString", connectionString)
             .WithEnvironment("Settings__Security__SecretKey", secretKey)
-            .WithEnvironment("Settings__Database__DatabaseName", "vinder-identity-provider")
+            .WithEnvironment("Settings__Database__DatabaseName", "federation")
             .WithEnvironment("Settings__Administration__Username", "admin")
             .WithEnvironment("Settings__Administration__Password", "admin")
             .WithWaitStrategy(Wait.ForUnixContainer().UntilMessageIsLogged("Application started"))

@@ -1,4 +1,4 @@
-namespace Vinder.IdentityProvider.Sdk.Errors;
+namespace Vinder.Federation.Sdk.Errors;
 
 public static class SdkErrors
 {

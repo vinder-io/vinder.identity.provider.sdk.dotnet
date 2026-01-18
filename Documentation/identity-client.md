@@ -87,14 +87,14 @@ else
 
 One of the key features of this SDK is its predictable, transparent error handling. Every method returns a `Result` object that contains an `Error` property when an operation fails.
 
-Instead of relying on fragile string comparisons or magic values, you can check for specific, known errors using the static error classes provided in the `Vinder.IdentityProvider.Sdk.Errors` namespace. This makes your error-handling logic robust and easy to read.
+Instead of relying on fragile string comparisons or magic values, you can check for specific, known errors using the static error classes provided in the `Vinder.Federation.Sdk.Errors` namespace. This makes your error-handling logic robust and easy to read.
 
 For example, if authentication fails due to incorrect credentials, the `result.Error` will be equal to `AuthenticationErrors.InvalidCredentials`.
 
 **Example: Handling a specific error**
 
 ```csharp
-using Vinder.IdentityProvider.Sdk.Errors;
+using Vinder.Federation.Sdk.Errors;
 
 var credentials = new AuthenticationCredentials("user@email.com", "wrong-password");
 var result = await identityClient.AuthenticateAsync(credentials);

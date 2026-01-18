@@ -1,4 +1,4 @@
-namespace Vinder.IdentityProvider.Sdk.Clients;
+namespace Vinder.Federation.Sdk.Clients;
 
 public sealed class PermissionsClient(HttpClient httpClient) : IPermissionsClient
 {

@@ -1,4 +1,4 @@
-namespace Vinder.IdentityProvider.Sdk.Serializers;
+namespace Vinder.Federation.Sdk.Serializers;
 
 public static class JsonSerialization
 {

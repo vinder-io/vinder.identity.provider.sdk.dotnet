@@ -5,20 +5,20 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>Vinder.IdentityProvider.Sdk</PackageId>
+    <PackageId>Vinder.Federation.Sdk</PackageId>
     <Company>Vinder</Company>
-    <Description>SDK for consuming the Vinder Identity Provider and managing authentication and authorization.</Description>
+    <Description>SDK for consuming the Vinder Federation and managing authentication and authorization.</Description>
     <PackageTags>identity;authentication;sdk;jwt</PackageTags>
-    <RepositoryUrl>https://github.com/vinder-io/vinder.identity.provider.sdk.dotnet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/vinder-io/vinder.federation.sdk.dotnet</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/vinder-io/vinder.identity.provider.sdk.dotnet</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/vinder-io/vinder.federation.sdk.dotnet</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.8" />
-    <PackageReference Include="Vinder.IdentityProvider.Sdk.Contracts" Version="1.0.8" />
+    <PackageReference Include="Vinder.Federation.Sdk.Contracts" Version="1.0.9" />
   </ItemGroup>
 
 </Project>

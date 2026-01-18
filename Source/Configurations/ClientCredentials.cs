@@ -1,4 +1,4 @@
-namespace Vinder.IdentityProvider.Sdk.Configurations;
+namespace Vinder.Federation.Sdk.Configurations;
 
 public sealed record ClientCredentials
 {

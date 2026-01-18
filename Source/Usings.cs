@@ -15,17 +15,17 @@ global using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 global using Vinder.Internal.Essentials.Patterns;
 
-global using Vinder.IdentityProvider.Sdk.Serializers;
-global using Vinder.IdentityProvider.Sdk.Errors;
-global using Vinder.IdentityProvider.Sdk.Helpers;
-global using Vinder.IdentityProvider.Sdk.Clients;
-global using Vinder.IdentityProvider.Sdk.Clients.Handlers;
-global using Vinder.IdentityProvider.Sdk.Configurations;
+global using Vinder.Federation.Sdk.Serializers;
+global using Vinder.Federation.Sdk.Errors;
+global using Vinder.Federation.Sdk.Helpers;
+global using Vinder.Federation.Sdk.Clients;
+global using Vinder.Federation.Sdk.Clients.Handlers;
+global using Vinder.Federation.Sdk.Configurations;
 
-global using Vinder.IdentityProvider.Sdk.Contracts.Clients;
-global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.Identity;
-global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.Group;
-global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.Permission;
-global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.Common;
-global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.Tenant;
-global using Vinder.IdentityProvider.Sdk.Contracts.Payloads.User;
+global using Vinder.Federation.Sdk.Contracts.Clients;
+global using Vinder.Federation.Sdk.Contracts.Payloads.Identity;
+global using Vinder.Federation.Sdk.Contracts.Payloads.Group;
+global using Vinder.Federation.Sdk.Contracts.Payloads.Permission;
+global using Vinder.Federation.Sdk.Contracts.Payloads.Common;
+global using Vinder.Federation.Sdk.Contracts.Payloads.Tenant;
+global using Vinder.Federation.Sdk.Contracts.Payloads.User;

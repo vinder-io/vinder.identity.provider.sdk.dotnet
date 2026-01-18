@@ -1,4 +1,4 @@
-namespace Vinder.IdentityProvider.Sdk.Helpers;
+namespace Vinder.Federation.Sdk.Helpers;
 
 public static class QueryParametersParser
 {

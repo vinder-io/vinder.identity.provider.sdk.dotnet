@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Source\Vinder.IdentityProvider.Sdk.csproj" />
+    <ProjectReference Include="..\Source\Vinder.Federation.Sdk.csproj" />
   </ItemGroup>
 
   <ItemGroup>

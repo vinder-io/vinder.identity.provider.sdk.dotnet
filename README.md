@@ -2,11 +2,11 @@
   <img src="https://i.imgur.com/MmamZlQ.png" alt="vinder.logo" />
 </p>
 
-<h1 align="center">IDENTITY PROVIDER - SDK FOR .NET</h1>
+<h1 align="center">VINDER FEDERATION - SDK FOR .NET</h1>
 
 ### About This Project
 
-This is the official .NET SDK for **Vinder Identity Provider**. Its goal is simple: make it easier for .NET applications to talk to the identity provider without reinventing the wheel.
+This is the official .NET SDK for **Vinder Federation**. Its goal is simple: make it easier for .NET applications to talk to the identity provider without reinventing the wheel.
 
 Here, we focus on **great developer experience** (DX). Everything is designed to be predictable, clear, and productive for developers. We use the Result Pattern, so every operation returns a clear result, with all expected errors typed, described, and coded.
 
@@ -20,4 +20,4 @@ Perfect for building small to medium applications, microservices, or any .NET ba
 
 ### Reference
 
-For more details about the main Identity Provider API, check out the official repository: [Identity Provider API](https://github.com/vinder-io/vinder.identity.provider)
+For more details about the main Identity Provider API, check out the official repository: [Vinder Federation API](https://github.com/vinder-io/vinder.federation.webapi)

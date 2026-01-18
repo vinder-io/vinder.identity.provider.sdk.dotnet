@@ -1,4 +1,4 @@
-namespace Vinder.IdentityProvider.Sdk.Extensions;
+namespace Vinder.Federation.Sdk.Extensions;
 
 public static class IdentityProviderExtension
 {

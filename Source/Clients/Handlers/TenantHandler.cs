@@ -1,4 +1,4 @@
-namespace Vinder.IdentityProvider.Sdk.Clients.Handlers;
+namespace Vinder.Federation.Sdk.Clients.Handlers;
 
 public sealed class TenantHandler(IdentityProviderOptions options) : DelegatingHandler
 {
