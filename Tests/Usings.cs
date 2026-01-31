@@ -1,4 +1,3 @@
-global using System.Security.Cryptography;
 global using Vinder.Federation.Sdk.Clients;
 
 global using Vinder.Federation.Sdk.Extensions;
