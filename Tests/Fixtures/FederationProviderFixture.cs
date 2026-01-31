@@ -30,7 +30,6 @@ public sealed class FederationProviderFixture : IAsyncLifetime
         await _mongoContainer.StartAsync();
 
         var connectionString = $"mongodb://admin:admin@mongo:27017";
-        var secretKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
 
         _federationProviderContainer = new ContainerBuilder()
             .WithImage("vinderio/federation:latest")
@@ -39,7 +38,6 @@ public sealed class FederationProviderFixture : IAsyncLifetime
             .WithExposedPort(8080)
             .WithPortBinding(0, 8080)
             .WithEnvironment("Settings__Database__ConnectionString", connectionString)
-            .WithEnvironment("Settings__Security__SecretKey", secretKey)
             .WithEnvironment("Settings__Database__DatabaseName", "federation")
             .WithEnvironment("Settings__Administration__Username", "admin")
             .WithEnvironment("Settings__Administration__Password", "admin")
