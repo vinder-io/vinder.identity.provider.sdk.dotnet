@@ -14,7 +14,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
             return Result<Pagination<UserDetails>>.Failure(SdkErrors.Unauthorized);
         }
 
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
@@ -48,7 +48,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
             return Result<IReadOnlyCollection<PermissionDetails>>.Failure(SdkErrors.Unauthorized);
         }
 
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
@@ -82,7 +82,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
             return Result<IReadOnlyCollection<GroupBasicDetails>>.Failure(SdkErrors.Unauthorized);
         }
 
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
@@ -112,7 +112,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
             return Result.Failure(SdkErrors.Unauthorized);
         }
 
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
@@ -137,7 +137,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
             return Result.Failure(SdkErrors.Unauthorized);
         }
 
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
@@ -162,7 +162,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
             return Result.Failure(SdkErrors.Unauthorized);
         }
 
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
@@ -185,7 +185,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
             return Result.Failure(SdkErrors.Unauthorized);
         }
 
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
@@ -208,7 +208,7 @@ public sealed class UsersClient(HttpClient httpClient) : IUsersClient
             return Result.Failure(SdkErrors.Unauthorized);
         }
 
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
