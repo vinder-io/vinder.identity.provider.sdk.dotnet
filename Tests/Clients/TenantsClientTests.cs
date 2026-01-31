@@ -1,7 +1,7 @@
 namespace Vinder.Federation.Sdk.TestSuite.Clients;
 
-public sealed class TenantsClientTests(IdentityProviderFixture server) :
-    IClassFixture<IdentityProviderFixture>
+public sealed class TenantsClientTests(FederationProviderFixture server) :
+    IClassFixture<FederationProviderFixture>
 {
     private readonly HttpClient _httpClient = server.HttpClient;
 
