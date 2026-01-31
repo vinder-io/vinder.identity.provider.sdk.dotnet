@@ -14,11 +14,11 @@ public static class HttpClientBuilderExtensions
 
     public static IHttpClientBuilder WithTenant(this IHttpClientBuilder builder)
     {
-        return builder.AddHttpMessageHandler<TenantHandler>();
+        return builder.AddHttpMessageHandler<TenantInterceptor>();
     }
 
     public static IHttpClientBuilder WithAuthentication(this IHttpClientBuilder builder)
     {
-        return builder.AddHttpMessageHandler<OpenIDAuthenticationHandler>();
+        return builder.AddHttpMessageHandler<AuthenticationInterceptor>();
     }
 }
