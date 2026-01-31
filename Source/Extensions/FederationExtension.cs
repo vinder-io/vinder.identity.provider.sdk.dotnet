@@ -12,7 +12,7 @@ public static class FederationExtension
         services.AddTransient<TenantInterceptor>();
 
         services.AddSingleton(options);
-        services.AddHttpClient<IOpenIDConnectClient, OpenIDConnectClient>(client =>
+        services.AddHttpClient<IConnectClient, ConnectClient>(client =>
         {
             client.BaseAddress = new Uri(options.BaseUrl);
         });

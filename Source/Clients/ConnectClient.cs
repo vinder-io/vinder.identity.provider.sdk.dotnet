@@ -1,6 +1,6 @@
 namespace Vinder.Federation.Sdk.Clients;
 
-public sealed class OpenIDConnectClient(HttpClient httpClient) : IOpenIDConnectClient
+public sealed class ConnectClient(HttpClient httpClient) : IConnectClient
 {
     public async Task<Result<ClientAuthenticationResult>> AuthenticateAsync(
         ClientAuthenticationCredentials credentials, CancellationToken cancellation = default)

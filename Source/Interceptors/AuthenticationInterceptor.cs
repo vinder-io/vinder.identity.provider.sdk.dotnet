@@ -1,6 +1,6 @@
 namespace Vinder.Federation.Sdk.Interceptors;
 
-public sealed class AuthenticationInterceptor(IOpenIDConnectClient openIDClient, FederationOptions options) : DelegatingHandler
+public sealed class AuthenticationInterceptor(IConnectClient connectClient, FederationOptions options) : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request, CancellationToken cancellationToken)
@@ -11,7 +11,7 @@ public sealed class AuthenticationInterceptor(IOpenIDConnectClient openIDClient,
             ClientSecret = options.ClientSecret
         };
 
-        var result = await openIDClient.AuthenticateAsync(clientCredentials, cancellationToken);
+        var result = await connectClient.AuthenticateAsync(clientCredentials, cancellationToken);
         if (result.IsFailure || result.Data is null)
         {
             throw new InvalidOperationException($"{result.Error.Code} - {result.Error.Description}");
