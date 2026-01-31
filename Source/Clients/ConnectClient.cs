@@ -15,7 +15,7 @@ public sealed class ConnectClient(HttpClient httpClient) : IConnectClient
         var formContent = new FormUrlEncodedContent(parameters);
 
         var response = await httpClient.PostAsync("api/v1/protocol/open-id/connect/token", formContent, cancellation);
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
