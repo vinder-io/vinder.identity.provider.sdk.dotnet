@@ -8,8 +8,8 @@ public static class FederationExtension
 
         configure(options);
 
-        services.AddTransient<OpenIDAuthenticationHandler>();
-        services.AddTransient<TenantHandler>();
+        services.AddTransient<AuthenticationInterceptor>();
+        services.AddTransient<TenantInterceptor>();
 
         services.AddSingleton(options);
         services.AddHttpClient<IOpenIDConnectClient, OpenIDConnectClient>(client =>
