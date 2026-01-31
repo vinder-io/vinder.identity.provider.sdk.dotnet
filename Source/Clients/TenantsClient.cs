@@ -9,7 +9,7 @@ public sealed class TenantsClient(HttpClient httpClient) : ITenantsClient
         string url = $"api/v1/tenants?{queryString}";
 
         var response = await httpClient.GetAsync(url, cancellation);
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
@@ -39,7 +39,7 @@ public sealed class TenantsClient(HttpClient httpClient) : ITenantsClient
             return Result<TenantDetails>.Failure(SdkErrors.Unauthorized);
         }
 
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
@@ -69,7 +69,7 @@ public sealed class TenantsClient(HttpClient httpClient) : ITenantsClient
             return Result<TenantDetails>.Failure(SdkErrors.Unauthorized);
         }
 
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
@@ -99,7 +99,7 @@ public sealed class TenantsClient(HttpClient httpClient) : ITenantsClient
             return Result.Failure(SdkErrors.Unauthorized);
         }
 
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
