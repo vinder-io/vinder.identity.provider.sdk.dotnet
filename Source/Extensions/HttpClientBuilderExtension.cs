@@ -12,12 +12,12 @@ public static class HttpClientBuilderExtensions
         });
     }
 
-    public static IHttpClientBuilder WithTenant(this IHttpClientBuilder builder)
+    public static IHttpClientBuilder WithTenantInterceptor(this IHttpClientBuilder builder)
     {
         return builder.AddHttpMessageHandler<TenantInterceptor>();
     }
 
-    public static IHttpClientBuilder WithAuthentication(this IHttpClientBuilder builder)
+    public static IHttpClientBuilder WithAuthenticationInterceptor(this IHttpClientBuilder builder)
     {
         return builder.AddHttpMessageHandler<AuthenticationInterceptor>();
     }

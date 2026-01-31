@@ -18,24 +18,24 @@ public static class FederationExtension
         });
 
         services.AddSdkHttpClient<IIdentityClient, IdentityClient>(options.BaseUrl)
-            .WithTenant()
-            .WithAuthentication();
+            .WithTenantInterceptor()
+            .WithAuthenticationInterceptor();
 
         services.AddSdkHttpClient<IPermissionsClient, PermissionsClient>(options.BaseUrl)
-            .WithTenant()
-            .WithAuthentication();
+            .WithTenantInterceptor()
+            .WithAuthenticationInterceptor();
 
         services.AddSdkHttpClient<IGroupsClient, GroupsClient>(options.BaseUrl)
-            .WithTenant()
-            .WithAuthentication();
+            .WithTenantInterceptor()
+            .WithAuthenticationInterceptor();
 
         services.AddSdkHttpClient<ITenantsClient, TenantsClient>(options.BaseUrl)
-            .WithTenant()
-            .WithAuthentication();
+            .WithTenantInterceptor()
+            .WithAuthenticationInterceptor();
 
         services.AddSdkHttpClient<IUsersClient, UsersClient>(options.BaseUrl)
-            .WithTenant()
-            .WithAuthentication();
+            .WithTenantInterceptor()
+            .WithAuthenticationInterceptor();
 
         services.AddBearerAuthentication();
         services.AddAuthorization();
