@@ -7,7 +7,7 @@ public sealed class IdentityClient(HttpClient httpClient) : IIdentityClient
     )
     {
         var response = await httpClient.PostAsJsonAsync("api/v1/identity/authenticate", credentials, cancellation);
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
@@ -32,7 +32,7 @@ public sealed class IdentityClient(HttpClient httpClient) : IIdentityClient
     public async Task<Result<UserDetails>> CreateIdentityAsync(IdentityEnrollmentCredentials credentials, CancellationToken cancellation = default)
     {
         var response = await httpClient.PostAsJsonAsync("api/v1/identity", credentials, cancellation);
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
@@ -57,7 +57,7 @@ public sealed class IdentityClient(HttpClient httpClient) : IIdentityClient
     public async Task<Result> InvalidateSessionAsync(SessionInvalidation session, CancellationToken cancellation = default)
     {
         var response = await httpClient.PostAsJsonAsync("api/v1/identity/invalidate-session", session, cancellation);
-        if (response.IsSuccessStatusCode is false)
+        if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Error>(
                 options: JsonSerialization.SerializerOptions,
