@@ -1,10 +1,11 @@
 namespace Vinder.Federation.Sdk.Extensions;
 
-public static class IdentityProviderExtension
+public static class FederationExtension
 {
-    public static void AddIdentityProvider(this IServiceCollection services, Action<IdentityProviderOptions> configure)
+    public static void AddFederation(this IServiceCollection services, Action<FederationOptions> configure)
     {
-        var options = new IdentityProviderOptions();
+        var options = new FederationOptions();
+
         configure(options);
 
         services.AddTransient<OpenIDAuthenticationHandler>();
