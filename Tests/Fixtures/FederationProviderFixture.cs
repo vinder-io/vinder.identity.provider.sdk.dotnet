@@ -1,9 +1,9 @@
 namespace Vinder.Federation.Sdk.TestSuite.Fixtures;
 
-public sealed class IdentityProviderFixture : IAsyncLifetime
+public sealed class FederationProviderFixture : IAsyncLifetime
 {
     private IContainer _mongoContainer = default!;
-    private IContainer _identityProviderContainer = default!;
+    private IContainer _federationProviderContainer = default!;
     private INetwork _network = default!;
 
     public HttpClient HttpClient { get; private set; } = default!;
@@ -32,7 +32,7 @@ public sealed class IdentityProviderFixture : IAsyncLifetime
         var connectionString = $"mongodb://admin:admin@mongo:27017";
         var secretKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
 
-        _identityProviderContainer = new ContainerBuilder()
+        _federationProviderContainer = new ContainerBuilder()
             .WithImage("vinderio/federation:latest")
             .WithCleanUp(true)
             .WithNetwork(_network)
@@ -46,9 +46,9 @@ public sealed class IdentityProviderFixture : IAsyncLifetime
             .WithWaitStrategy(Wait.ForUnixContainer().UntilMessageIsLogged("Application started"))
             .Build();
 
-        await _identityProviderContainer.StartAsync();
+        await _federationProviderContainer.StartAsync();
 
-        var port = _identityProviderContainer.GetMappedPublicPort(8080);
+        var port = _federationProviderContainer.GetMappedPublicPort(8080);
         var host = $"http://localhost:{port}";
 
         HttpClient = new HttpClient { BaseAddress = new Uri(host) };
@@ -56,8 +56,8 @@ public sealed class IdentityProviderFixture : IAsyncLifetime
 
     public async Task DisposeAsync()
     {
-        await _identityProviderContainer.StopAsync();
-        await _identityProviderContainer.DisposeAsync();
+        await _federationProviderContainer.StopAsync();
+        await _federationProviderContainer.DisposeAsync();
 
         await _mongoContainer.StopAsync();
         await _mongoContainer.DisposeAsync();
