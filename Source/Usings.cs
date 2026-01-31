@@ -19,7 +19,7 @@ global using Vinder.Federation.Sdk.Serializers;
 global using Vinder.Federation.Sdk.Helpers;
 global using Vinder.Federation.Sdk.Clients;
 global using Vinder.Federation.Sdk.Configurations;
-global using Vinder.Federation.Sdk.Clients.Handlers;
+global using Vinder.Federation.Sdk.Interceptors;
 
 global using Vinder.Federation.Sdk.Contracts.Clients;
 global using Vinder.Federation.Sdk.Contracts.Payloads.Identity;
