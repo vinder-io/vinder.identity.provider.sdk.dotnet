@@ -1,6 +1,6 @@
-namespace Vinder.Federation.Sdk.Clients.Handlers;
+namespace Vinder.Federation.Sdk.Interceptors;
 
-public sealed class TenantHandler(IdentityProviderOptions options) : DelegatingHandler
+public sealed class TenantInterceptor(FederationOptions options) : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request, CancellationToken cancellationToken)

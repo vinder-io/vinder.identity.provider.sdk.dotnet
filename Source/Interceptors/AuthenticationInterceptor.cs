@@ -1,6 +1,6 @@
-namespace Vinder.Federation.Sdk.Clients.Handlers;
+namespace Vinder.Federation.Sdk.Interceptors;
 
-public sealed class OpenIDAuthenticationHandler(IOpenIDConnectClient openIDClient, IdentityProviderOptions options) : DelegatingHandler
+public sealed class AuthenticationInterceptor(IOpenIDConnectClient openIDClient, FederationOptions options) : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request, CancellationToken cancellationToken)
